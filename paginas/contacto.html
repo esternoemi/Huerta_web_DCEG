@@ -29,13 +29,23 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <form class="panel">
+                        <form class="panel" method="post" data-validacion novalidate>
                         <div class="mb-3"><label class="form-label" for="nombre">Nombre</label><input
-                                class="form-control" id="nombre" type="text"></div>
+                            class="form-control" id="nombre" name="nombre" type="text" autocomplete="name"
+                            maxlength="100" required data-regla="nombre" data-mensaje="nombre-error"
+                            aria-describedby="nombre-error"><div class="invalid-feedback" id="nombre-error"></div>
+                        </div>
                         <div class="mb-3"><label class="form-label" for="correo">Correo electrónico</label><input
-                                class="form-control" id="correo" type="email"></div>
+                            class="form-control" id="correo" name="correo" type="email" autocomplete="email"
+                            maxlength="100" required data-regla="correo" data-mensaje="correo-error"
+                            aria-describedby="correo-error"><div class="invalid-feedback" id="correo-error"></div>
+                        </div>
                         <div class="mb-3"><label class="form-label" for="mensaje">Mensaje</label><textarea
-                                class="form-control" id="mensaje" rows="5"></textarea></div><button
+                            class="form-control" id="mensaje" name="mensaje" rows="5" maxlength="200" required
+                            data-regla="mensaje" data-mensaje="mensaje-error" data-contador="mensaje-contador"
+                            aria-describedby="mensaje-error mensaje-contador"></textarea><div
+                            class="invalid-feedback" id="mensaje-error"></div><div class="form-text"
+                            id="mensaje-contador">0/200 caracteres</div></div><button
                             class="boton boton-verde" type="submit">Enviar mensaje</button>
                     </form>
                 </div>
@@ -45,6 +55,7 @@
     <footer class="pie-pagina">
         <div class="container">HUERTA</div>
     </footer>
+    <script src="../js/validaciones.js"></script>
 </body>
 
 </html>

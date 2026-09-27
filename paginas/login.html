@@ -25,11 +25,17 @@
                         <h1 class="h2">Ingresar</h1>
                         <p>COLOCAR TEXTO ACA</p>
                     </div>
-                    <form class="panel">
+                        <form class="panel" method="post" data-validacion novalidate>
                         <div class="mb-3"><label class="form-label" for="correo">Correo electrónico</label><input
-                                class="form-control" id="correo" type="email" placeholder="correo@ejemplo.com"></div>
+                            class="form-control" id="correo" name="correo" type="email" autocomplete="email"
+                            maxlength="100" required data-regla="correo" data-mensaje="correo-error"
+                            aria-describedby="correo-error"><div class="invalid-feedback" id="correo-error"></div>
+                        </div>
                         <div class="mb-3"><label class="form-label" for="contrasena">Contraseña</label><input
-                                class="form-control" id="contrasena" type="password" placeholder="COLOCAR TEXTO ACA">
+                            class="form-control" id="contrasena" name="contrasena" type="password"
+                            autocomplete="current-password" maxlength="15" required data-regla="contrasena"
+                            data-mensaje="contrasena-error" aria-describedby="contrasena-error"><div
+                            class="invalid-feedback" id="contrasena-error"></div>
                         </div><button class="boton boton-verde w-100" type="submit">Ingresar</button>
                         <p class="mt-4 mb-0 text-center">¿No tienes cuenta? <a class="enlace"
                                 href="registro.html">Registrarse</a></p>
@@ -41,6 +47,7 @@
     <footer class="pie-pagina">
         <div class="container">HUERTA</div>
     </footer>
+    <script src="../js/validaciones.js"></script>
 </body>
 
 </html>

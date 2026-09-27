@@ -22,17 +22,32 @@
                 <div class="col-lg-7">
                     <p class="etiqueta">CUENTA</p>
                     <h1 class="h2 titulo-interior">Crear cuenta</h1>
-                    <form class="panel row g-3">
+                        <form class="panel row g-3" method="post" data-validacion novalidate>
                         <div class="col-md-6"><label class="form-label" for="nombre">Nombre</label><input
-                                class="form-control" id="nombre" type="text"></div>
+                            class="form-control" id="nombre" name="nombre" type="text" autocomplete="given-name"
+                            maxlength="100" required data-regla="nombre" data-mensaje="nombre-error"
+                            aria-describedby="nombre-error"><div class="invalid-feedback" id="nombre-error"></div>
+                        </div>
                         <div class="col-md-6"><label class="form-label" for="apellido">Apellido</label><input
-                                class="form-control" id="apellido" type="text"></div>
+                            class="form-control" id="apellido" name="apellido" type="text"
+                            autocomplete="family-name" maxlength="100" required data-regla="nombre"
+                            data-mensaje="apellido-error" aria-describedby="apellido-error"><div
+                            class="invalid-feedback" id="apellido-error"></div></div>
                         <div class="col-12"><label class="form-label" for="correo">Correo electrónico</label><input
-                                class="form-control" id="correo" type="email"></div>
+                            class="form-control" id="correo" name="correo" type="email" autocomplete="email"
+                            maxlength="100" required data-regla="correo" data-mensaje="correo-error"
+                            aria-describedby="correo-error"><div class="invalid-feedback" id="correo-error"></div>
+                        </div>
                         <div class="col-md-6"><label class="form-label" for="contrasena">Contraseña</label><input
-                                class="form-control" id="contrasena" type="password"></div>
+                            class="form-control" id="contrasena" name="contrasena" type="password"
+                            autocomplete="new-password" maxlength="15" required data-regla="contrasena"
+                            data-mensaje="contrasena-error" aria-describedby="contrasena-error"><div
+                            class="invalid-feedback" id="contrasena-error"></div></div>
                         <div class="col-md-6"><label class="form-label" for="telefono">Número de contacto</label><input
-                                class="form-control" id="telefono" type="tel"></div>
+                            class="form-control" id="telefono" name="telefono" type="tel" inputmode="numeric"
+                            autocomplete="tel" maxlength="100" required data-regla="telefono"
+                            data-mensaje="telefono-error" aria-describedby="telefono-error"><div
+                            class="invalid-feedback" id="telefono-error"></div></div>
                         <div class="col-12"><button class="boton boton-verde" type="submit">Crear cuenta</button></div>
                     </form>
                 </div>
@@ -42,6 +57,7 @@
     <footer class="pie-pagina">
         <div class="container">HUERTA</div>
     </footer>
+    <script src="../js/validaciones.js"></script>
 </body>
 
 </html>
