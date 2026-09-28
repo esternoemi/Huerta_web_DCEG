@@ -50,6 +50,35 @@ const reglasValidacion = {
         return valor.length <= 200
             ? ""
             : "El mensaje no puede superar los 200 caracteres.";
+    },
+    cantidad: (valor, campo) => {
+        if (!valor) {
+            return "Ingresa una cantidad.";
+        }
+
+        const cantidadIngresada = Number(valor);
+        const cantidadMinima = Number(campo.getAttribute("min")) || 1;
+
+        if (!Number.isInteger(cantidadIngresada)) {
+            return "Ingresa una cantidad entera.";
+        }
+
+        return cantidadIngresada >= cantidadMinima
+            ? ""
+            : `La cantidad mínima es ${cantidadMinima}.`;
+    },
+    categoria: (valor, campo) => {
+        const categoriasPermitidas = [
+            "",
+            "frutas-frescas",
+            "verduras-organicas",
+            "productos-organicos",
+            "productos-lacteos"
+        ];
+
+        return campo.selectedIndex >= 0 && categoriasPermitidas.includes(valor)
+            ? ""
+            : "Selecciona una categoría disponible o deja todas las categorías.";
     }
 };
 
@@ -75,7 +104,7 @@ function limpiarError(campo) {
 
 function validarCampo(campo) {
     const regla = reglasValidacion[campo.dataset.regla];
-    const mensaje = regla ? regla(campo.value) : "";
+    const mensaje = regla ? regla(campo.value, campo) : "";
     const longitudMaxima = Number(campo.getAttribute("maxlength"));
     const mensajeFinal = mensaje || (longitudMaxima && campo.value.length > longitudMaxima
         ? `No puede superar los ${longitudMaxima} caracteres.`
@@ -116,6 +145,41 @@ document.querySelectorAll("form[data-validacion]").forEach((formulario) => {
         }
     });
 });
+
+document.querySelectorAll("[data-regla]").forEach((campo) => {
+    const validarTrasInteraccion = () => validarCampo(campo);
+
+    campo.addEventListener("input", validarTrasInteraccion);
+    campo.addEventListener("change", validarTrasInteraccion);
+    campo.addEventListener("blur", validarTrasInteraccion);
+});
+
+const filtroCategoria = document.getElementById("filtro-categoria");
+const productosPorCategoria = document.querySelectorAll("[data-categoria]");
+const avisoSinResultados = document.getElementById("sin-resultados");
+
+if (filtroCategoria && avisoSinResultados) {
+    const filtrarProductos = () => {
+        if (filtroCategoria.selectedIndex < 0) {
+            return;
+        }
+
+        let cantidadVisible = 0;
+
+        productosPorCategoria.forEach((producto) => {
+            const coincide = !filtroCategoria.value
+                || producto.dataset.categoria === filtroCategoria.value;
+
+            producto.hidden = !coincide;
+            cantidadVisible += coincide ? 1 : 0;
+        });
+
+        avisoSinResultados.hidden = cantidadVisible > 0;
+    };
+
+    filtroCategoria.addEventListener("change", filtrarProductos);
+    filtrarProductos();
+}
 
 document.querySelectorAll("[data-contador]").forEach((campo) => {
     const contador = document.getElementById(campo.dataset.contador);

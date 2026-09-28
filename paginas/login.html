@@ -25,7 +25,7 @@
                         <h1 class="h2">Ingresar</h1>
                         <p>COLOCAR TEXTO ACA</p>
                     </div>
-                        <form class="panel" method="post" data-validacion novalidate>
+                        <form class="panel" method="post" data-validacion data-login novalidate>
                         <div class="mb-3"><label class="form-label" for="correo">Correo electrónico</label><input
                             class="form-control" id="correo" name="correo" type="email" autocomplete="email"
                             maxlength="100" required data-regla="correo" data-mensaje="correo-error"
@@ -37,6 +37,7 @@
                             data-mensaje="contrasena-error" aria-describedby="contrasena-error"><div
                             class="invalid-feedback" id="contrasena-error"></div>
                         </div><button class="boton boton-verde w-100" type="submit">Ingresar</button>
+                        <div class="mt-3" id="mensaje-login" role="status" aria-live="polite"></div>
                         <p class="mt-4 mb-0 text-center">¿No tienes cuenta? <a class="enlace"
                                 href="registro.html">Registrarse</a></p>
                     </form>
@@ -48,6 +49,7 @@
         <div class="container">HUERTA</div>
     </footer>
     <script src="../js/validaciones.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 
 </html>

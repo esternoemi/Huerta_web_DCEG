@@ -1,0 +1,10 @@
+# Inventario de demostración de Huerto Hogar
+# Datos proporcionados para el mockup. Precios en pesos chilenos.
+# Formato: id|nombre|categoria|precio_clp_por|stock_cantidad|stock_unidad|descripcion
+FR001|Manzanas Fuji|frutas-frescas|1200|150|kilos|Manzanas Fuji crujientes y dulces, cultivadas en el Valle del Maule. Perfectas para meriendas saludables o como ingrediente en postres. Con textura firme y sabor equilibrado entre dulce y ácido.
+FR002|Naranjas Valencia|frutas-frescas|1000|200|kilos|Jugosas y ricas en vitamina C, ideales para zumos frescos y refrescantes. Cultivadas en condiciones climáticas óptimas que aseguran su dulzura y jugosidad.
+FR003|Plátanos Cavendish|frutas-frescas|800|250|kilos|Plátanos maduros y dulces, perfectos para el desayuno o como snack energético. Ricos en potasio y vitaminas, ideales para mantener una dieta equilibrada.
+VR001|Zanahorias Orgánicas|verduras-organicas|900|100|kilos|Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins. Excelente fuente de vitamina A y fibra, ideales para ensaladas, jugos o como snack saludable.
+VR002|Espinacas Frescas|verduras-organicas|700|80|bolsas de 500 g|Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes. Cultivadas bajo prácticas orgánicas que garantizan su calidad y valor nutricional.
+VR003|Pimientos Tricolores|verduras-organicas|1500|120|kilos|Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos. Ricos en antioxidantes y vitaminas, añaden un toque vibrante y saludable a cualquier receta.
+PO001|Miel Orgánica|productos-organicos|5000|50|frascos de 500 g|Miel pura y orgánica producida por apicultores locales. Rica en antioxidantes y con un sabor inigualable, perfecta para endulzar naturalmente comidas y bebidas.

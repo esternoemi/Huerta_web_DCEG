@@ -1,1 +1,4 @@
-Datos de usuarios pendientes de implementar.
+# Usuario ficticio para pruebas del mockup. No usar estos datos en producción.
+# Contraseña en texto plano solo para demostración; el login aún no consulta este archivo.
+# Formato: nombre|apellido|correo|contrasena|telefono
+Usuario|Prueba|prueba@huertahogar.cl|Huerta#2026|912345678
