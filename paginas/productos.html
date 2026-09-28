@@ -4,27 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huerta | Productos</title>
+    <title>Huerto Hogar 🌿 | Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilos/estilos.css">
 </head>
 
 <body>
     <header class="encabezado">
-        <nav class="navbar">
-            <div class="container"><a class="navbar-brand marca" href="../index.html">HUERTA</a>
-                <div class="d-flex gap-3 align-items-center"><a class="enlace" href="contacto.html">Contacto</a><a
-                        class="boton boton-verde" href="carrito.html">Carrito (0)</a></div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand marca" href="../index.html">Huerto Hogar 🌿</a>
+                <button class="navbar-toggler" type="button" id="boton-menu" aria-label="Abrir menú">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse d-none d-lg-block" id="menu-principal">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link activo" href="productos.html">Productos</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="nosotros.html">Nosotros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+                        <li class="nav-item"><a class="boton boton-claro" href="login.html">Ingresar</a></li>
+                        <li class="nav-item"><a class="boton boton-verde" href="carrito.html">Carrito (0)</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
+
+
     <main class="pagina-interior">
         <div class="container">
             <div class="d-flex justify-content-between align-items-end flex-wrap gap-3 titulo-interior">
                 <div>
                     <p class="etiqueta">CATÁLOGO</p>
                     <h1 class="h2 mb-0">Productos</h1>
-                </div><select class="form-select" style="max-width: 220px">
+                </div><select class="form-select filtro-categoria">
                     <option>Filtrar categoría</option>
                     <option>Frutas Frescas</option>
                     <option>Verduras Orgánicas</option>
@@ -32,49 +47,157 @@
                     <option>Productos Lácteos</option>
                 </select>
             </div>
+
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
                     <article class="tarjeta-producto">
-                        <div class="imagen-producto">IMAGEN DEL PRODUCTO</div>
+                        <div class="imagen-producto"><img src="../images/FR001 - manzanaFuji.png" alt="Manzana Fuji"></div>
                         <div class="contenido-producto">
-                            <p class="etiqueta">FRUTAS</p>
-                            <h3>Nombre del producto</h3>
-                            <p>Descripción, origen y disponibilidad.</p>
+                            <p class="etiqueta">FRUTAS FRESCAS</p>
+                            <h3>Manzana Fuji</h3>
                             <div class="d-flex justify-content-between align-items-center"><span class="precio">$
-                                    0.000</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                                    1.200 por kilo</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
                         </div>
                     </article>
                 </div>
+
                 <div class="col-md-6 col-lg-4">
                     <article class="tarjeta-producto">
-                        <div class="imagen-producto">IMAGEN DEL PRODUCTO</div>
+                        <div class="imagen-producto"><img src="../images/FR002 - naranjasValencia.png" alt="Naranjas Valencia"></div>
                         <div class="contenido-producto">
-                            <p class="etiqueta">VERDURAS</p>
-                            <h3>Nombre del producto</h3>
-                            <p>Descripción, origen y disponibilidad.</p>
+                            <p class="etiqueta">FRUTAS FRESCAS</p>
+                            <h3>Naranjas Valencia</h3>
                             <div class="d-flex justify-content-between align-items-center"><span class="precio">$
-                                    0.000</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                                    1.000 por kilo</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
                         </div>
                     </article>
                 </div>
+                
                 <div class="col-md-6 col-lg-4">
                     <article class="tarjeta-producto">
-                        <div class="imagen-producto">IMAGEN DEL PRODUCTO</div>
+                        <div class="imagen-producto"><img src="../images/FR003 - platanosCavendish.png" alt="Platanos Cavendish"></div>
                         <div class="contenido-producto">
-                            <p class="etiqueta">ORGÁNICOS</p>
-                            <h3>Nombre del producto</h3>
-                            <p>Descripción, origen y disponibilidad.</p>
+                            <p class="etiqueta">FRUTAS FRESCAS</p>
+                            <h3>Plátanos Cavendish</h3>
+                            <p>Plátanos maduros y dulces, perfectos para el desayuno o como snack
+                                energético. Estos plátanos son ricos en potasio y vitaminas, ideales para mantener una
+                                dieta equilibrada.</p>
                             <div class="d-flex justify-content-between align-items-center"><span class="precio">$
-                                    0.000</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                                    800 por kilo</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
                         </div>
                     </article>
                 </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/VR001 - zanahoriasOrganicas.png" alt="Zanahorias Organicas">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">VERDURAS ORGÁNICAS</p>
+                            <h3>Zanahorias Organicas</h3>
+                            <p>Zanahorias crujientes cultivadas sin pesticidas en la Región de O'Higgins.
+                                Excelente fuente de vitamina A y fibra, ideales para ensaladas, jugos o como snack
+                                saludable.</p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">$
+                                    900 por kilo</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/VR002 - espinacaFresca.png" alt="Espinaca Fresca">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">VERDURAS ORGÁNICAS</p>
+                            <h3>Espinaca Fresca</h3>
+                            <p>Espinacas frescas y nutritivas, perfectas para ensaladas y batidos verdes.
+                                Estas espinacas son cultivadas bajo prácticas orgánicas que garantizan su calidad y valor
+                                nutricional.</p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">$
+                                    700 bolsa 500g</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+                
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/VR003 - pimientosTricilor.png" alt="Pimientos Tricilor">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">VERDURAS ORGÁNICAS</p>
+                            <h3>Pimientos Tricilor</h3>
+                            <p>Pimientos rojos, amarillos y verdes, ideales para salteados y platos
+                                coloridos. Ricos en antioxidantes y vitaminas, estos pimientos añaden un toque vibrante
+                                y saludable a cualquier receta.</p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">$
+                                    1.500 por kilo</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/PO001 - mielOrganica.png" alt="Miel Organica">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">PRODUCTOS ORGÁNICOS</p>
+                            <h3>Miel Orgánica</h3>
+                            <p>Miel pura y orgánica producida por apicultores locales. Rica en
+                                antioxidantes y con un sabor inigualable, perfecta para endulzar de manera natural tus
+                                comidas y bebidas.</p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">$
+                                    5.000 frasco 500g</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/PO002 - QuinoaOrganica.png" alt="Quinoa Organica">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">PRODUCTOS ORGÁNICOS</p>
+                            <h3>Quinoa Orgánica</h3>
+                            <p>Fuente excepcional de proteína completa, fibra y minerales esenciales. Perfecta para ensaladas, guisos o
+                                como el sustituto ideal del arroz. </p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">
+                                    Próximante</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+                
+                
+                <div class="col-md-6 col-lg-4">
+                    <article class="tarjeta-producto">
+                        <div class="imagen-producto"><img src="../images/PL001 - lecheEntera.png" alt="Leche Entera">
+                        </div>
+                        <div class="contenido-producto">
+                            <p class="etiqueta">PRODUCTOS LÁCTEOS</p>
+                            <h3>Leche Entera</h3>
+                            <p></p>
+                            <div class="d-flex justify-content-between align-items-center"><span class="precio">
+                                    Próximante</span><a class="enlace" href="detalle-producto.html">Ver detalle</a></div>
+                        </div>
+                    </article>
+                </div>
+
             </div>
         </div>
     </main>
+
+
     <footer class="pie-pagina">
-        <div class="container">HUERTA</div>
+        <div class="container d-flex justify-content-between flex-wrap gap-3"><span>HUERTO HOGAR 🌿</span><span>TODOS
+                LOS DERECHOS RESERVADOS</span></div>
     </footer>
+
+    <script src="../js/menu.js"></script>
+
 </body>
 
 </html>
