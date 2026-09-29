@@ -50,7 +50,7 @@ const productos = {
     },
 
     VR003: {
-        nombre: "Pimientos Tricilor",
+        nombre: "Pimientos Tricolor",
         categoria: "Verduras Orgánicas",
         precio: "$1.500 por kilo",
         descripcion: "Pimientos rojos, amarillos y verdes, ideales para salteados y platos coloridos. Ricos en antioxidantes y vitaminas, estos pimientos añaden un toque vibrante y saludable a cualquier receta.",
