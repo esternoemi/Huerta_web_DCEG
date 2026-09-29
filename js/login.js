@@ -2,7 +2,7 @@ const formularioLogin = document.querySelector("form[data-login]");
 const mensajeLogin = document.getElementById("mensaje-login");
 
 if (formularioLogin && mensajeLogin) {
-    formularioLogin.addEventListener("submit", async (evento) => {
+    formularioLogin.addEventListener("submit", (evento) => {
         evento.preventDefault();
 
         if (formularioLogin.querySelector(".is-invalid")) {
@@ -14,40 +14,36 @@ if (formularioLogin && mensajeLogin) {
         mensajeLogin.textContent = "Comprobando usuario de demostración...";
         mensajeLogin.className = "alert alert-info mt-3";
 
+        let usuariosDisponibles = usuariosDemostracion;
+
         try {
-            const respuesta = await fetch("../data/usuarios.txt", { cache: "no-store" });
-
-            if (!respuesta.ok) {
-                throw new Error("No fue posible leer usuarios.txt.");
-            }
-
-            const contenidoUsuarios = await respuesta.text();
-            const usuarios = contenidoUsuarios
-                .split(/\r?\n/)
-                .filter((linea) => linea.trim() && !linea.trim().startsWith("#"))
-                .map((linea) => {
-                    const [nombre, apellido, correo, contrasena, telefono] = linea.split("|");
-
-                    return { nombre, apellido, correo, contrasena, telefono };
-                });
-
-            const usuarioEncontrado = usuarios.find((usuario) =>
-                usuario.correo?.trim().toLowerCase() === correoIngresado
+            usuariosDisponibles = [...usuariosDemostracion, ...leerUsuariosLocales()];
+        } catch {
+            const usuarioDemoEncontrado = usuariosDemostracion.find((usuario) =>
+                usuario.correo.toLowerCase() === correoIngresado
                 && usuario.contrasena === contrasenaIngresada
             );
 
-            if (usuarioEncontrado) {
-                mensajeLogin.textContent = `Credenciales de demostración válidas. Hola, ${usuarioEncontrado.nombre}. No se inició una sesión.`;
-                mensajeLogin.className = "alert alert-success mt-3";
+            if (!usuarioDemoEncontrado) {
+                mensajeLogin.textContent = "No se pudieron leer las cuentas guardadas en este navegador.";
+                mensajeLogin.className = "alert alert-danger mt-3";
                 return;
             }
-
-            mensajeLogin.textContent = "Correo o contraseña incorrectos.";
-            mensajeLogin.className = "alert alert-danger mt-3";
-        } catch {
-            mensajeLogin.textContent = "No se pudo consultar usuarios.txt. Abre el sitio mediante un servidor local.";
-            mensajeLogin.className = "alert alert-warning mt-3";
         }
+
+        const usuarioEncontrado = usuariosDisponibles.find((usuario) =>
+            usuario.correo.trim().toLowerCase() === correoIngresado
+            && usuario.contrasena === contrasenaIngresada
+        );
+
+        if (usuarioEncontrado) {
+            mensajeLogin.textContent = `Credenciales de demostración válidas. Hola, ${usuarioEncontrado.nombre}. No se inició una sesión.`;
+            mensajeLogin.className = "alert alert-success mt-3";
+            return;
+        }
+
+        mensajeLogin.textContent = "Correo o contraseña incorrectos.";
+        mensajeLogin.className = "alert alert-danger mt-3";
     });
 
     formularioLogin.querySelectorAll("input").forEach((campo) => {

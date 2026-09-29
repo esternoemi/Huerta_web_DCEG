@@ -22,7 +22,7 @@
                 <div class="col-lg-7">
                     <p class="etiqueta">CUENTA</p>
                     <h1 class="h2 titulo-interior">Crear cuenta</h1>
-                        <form class="panel row g-3" method="post" data-validacion novalidate>
+                        <form class="panel row g-3" method="post" data-validacion data-registro novalidate>
                         <div class="col-md-6"><label class="form-label" for="nombre">Nombre</label><input
                             class="form-control" id="nombre" name="nombre" type="text" autocomplete="given-name"
                             required data-regla="nombre" data-mensaje="nombre-error"
@@ -65,6 +65,7 @@
                             autocomplete="tel" required data-regla="telefono"
                             data-mensaje="telefono-error" aria-describedby="telefono-error"><div
                             class="invalid-feedback" id="telefono-error"></div></div>
+                        <div class="col-12" id="mensaje-registro" role="status" aria-live="polite"></div>
                         <div class="col-12"><button class="boton boton-verde" type="submit">Crear cuenta</button></div>
                     </form>
                 </div>
@@ -75,6 +76,8 @@
         <div class="container">HUERTA</div>
     </footer>
     <script src="../js/validaciones.js"></script>
+    <script src="../js/usuarios.js"></script>
+    <script src="../js/registro.js"></script>
 </body>
 
 </html>

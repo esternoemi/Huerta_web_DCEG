@@ -58,7 +58,7 @@ function obtenerRequisitosContrasena(valor) {
         minuscula: /\p{Ll}/u.test(valor),
         numero: /\p{N}/u.test(valor),
         simbolo: /[^\p{L}\p{N}\s]/u.test(valor),
-        maximo: valor.length <= limites.contrasenaMaxima
+        maximo: valor.length > 0 && valor.length <= limites.contrasenaMaxima
     };
 }
 
