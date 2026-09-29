@@ -14,7 +14,8 @@ if (formularioRegistro && mensajeRegistro) {
             apellido: formularioRegistro.elements.apellido.value.trim(),
             correo: formularioRegistro.elements.correo.value.trim().toLowerCase(),
             contrasena: formularioRegistro.elements.contrasena.value,
-            telefono: formularioRegistro.elements.telefono.value
+            telefono: formularioRegistro.elements.telefono.value,
+            rol: "cliente"
         };
 
         try {

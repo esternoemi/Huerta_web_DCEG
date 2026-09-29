@@ -37,7 +37,15 @@ if (formularioLogin && mensajeLogin) {
         );
 
         if (usuarioEncontrado) {
-            mensajeLogin.textContent = `Credenciales de demostración válidas. Hola, ${usuarioEncontrado.nombre}. No se inició una sesión.`;
+            const rolUsuario = usuarioEncontrado.rol === "administrador" ? "administrador" : "cliente";
+            guardarSesionUsuario({ ...usuarioEncontrado, rol: rolUsuario });
+
+            if (rolUsuario === "administrador") {
+                window.location.href = "administracion.html";
+                return;
+            }
+
+            mensajeLogin.textContent = `Sesión iniciada. Hola, ${usuarioEncontrado.nombre}.`;
             mensajeLogin.className = "alert alert-success mt-3";
             return;
         }
