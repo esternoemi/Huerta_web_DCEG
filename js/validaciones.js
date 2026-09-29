@@ -27,7 +27,7 @@ const configuracionValidacion = {
         mensajeMaximo: (maximo) => `El mensaje no puede superar los ${maximo} caracteres.`,
         cantidadEntera: "Ingresa una cantidad entera.",
         cantidadMinima: (minimo) => `La cantidad mínima es ${minimo}.`,
-        cantidadMaxima: (maximo) => `Solo hay ${maximo} unidades disponibles. Ajusta la cantidad.`,
+        cantidadMaxima: (maximo, unidad) => `La cantidad máxima es ${maximo} ${unidad}.`,
         cantidadSinStock: "Este producto ya no tiene unidades disponibles.",
         stockNoComprobado: "No se pudo comprobar el stock. Inténtalo nuevamente.",
         categoria: "Selecciona una categoría disponible o deja todas las categorías.",
@@ -194,7 +194,7 @@ const reglasValidacion = {
             return mensajes.cantidadMinima(cantidadMinima);
         }
         if (Number.isFinite(cantidadMaxima) && cantidadIngresada > cantidadMaxima) {
-            return mensajes.cantidadMaxima(cantidadMaxima);
+            return mensajes.cantidadMaxima(cantidadMaxima, campo.dataset.unidadDisponible || "unidades");
         }
 
         return "";

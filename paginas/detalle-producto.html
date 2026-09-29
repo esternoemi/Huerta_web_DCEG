@@ -48,7 +48,10 @@
                     <p id="producto-descripcion"></p>
                     <p><strong>Origen:</strong> <span id="producto-origen"></span></p>
                     <p><strong>Disponibilidad:</strong> <span id="producto-disponibilidad"></span></p>
-                    <div class="d-flex gap-2 mt-4 align-items-end">
+                    <div class="alert alert-info mt-3" id="aviso-sin-precio" role="status" hidden>
+                        Próximamente. Este producto aún no tiene precio y no está disponible para compra.
+                    </div>
+                    <div class="gap-2 mt-4 align-items-end" id="acciones-compra" hidden>
                         <div style="max-width: 150px">
                             <label class="form-label" for="cantidad">Cantidad</label>
                             <input class="form-control" id="cantidad" name="cantidad" type="number" value="1"

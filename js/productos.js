@@ -72,20 +72,20 @@ const productos = {
     PO002: {
         nombre: "Quinoa Orgánica",
         categoria: "Productos Orgánicos",
-        precio: "Próximante",
+        precio: "Próximamente",
         descripcion: "Fuente excepcional de proteína completa, fibra y minerales esenciales. Perfecta para ensaladas, guisos o como el sustituto ideal del arroz.",
         origen: "Valle del Maule",
-        disponibilidad: "120 kilos",
+        disponibilidad: "Próximamente",
         imagen: "../images/PO002 - QuinoaOrganica.png"        
     },
 
     PL001: {
         nombre: "Leche Entera",
         categoria: "Productos Lácteos",
-        precio: "Próximante",
+        precio: "Próximamente",
         descripcion: "Disfruta del sabor y la cremosidad de siempre con nuestra leche entera! 100% pura, natural y una excelente fuente de calcio y energía, es la opción ideal para desayunos perfectos, recetas deliciosas y para cuidar el bienestar de toda tu familia.",
         origen: "Valle del Maule",
-        disponibilidad: "120 kilos",
+        disponibilidad: "120 Litros",
         imagen: "../images/PL001 - lecheEntera.png"        
     },
 }
@@ -98,7 +98,9 @@ console.log("ID recibido:", idProducto);
 const producto = productos[idProducto];
 console.log("Producto encontrado:", producto);
 
-if (producto) {
+if (!producto) {
+    window.alert("No encontramos ese producto. Vuelve al catálogo para seguir explorando.");
+} else {
     document.getElementById("producto-categoria").textContent = producto.categoria;
     document.getElementById("producto-nombre").textContent = producto.nombre;
     document.getElementById("producto-precio").textContent = producto.precio;
@@ -107,7 +109,21 @@ if (producto) {
     document.getElementById("producto-disponibilidad").textContent = producto.disponibilidad;
 
     const imagen = document.getElementById("producto-imagen");
+    const accionesCompra = document.getElementById("acciones-compra");
+    const avisoSinPrecio = document.getElementById("aviso-sin-precio");
+    const campoCantidad = document.getElementById("cantidad");
+    const productoDisponibleParaCompra = producto.precio !== "Próximamente";
+    const disponibilidad = /^(\d+)\s+(.+)$/u.exec(producto.disponibilidad.trim());
 
     imagen.src = producto.imagen;
     imagen.alt = producto.nombre;
+
+    accionesCompra.hidden = !productoDisponibleParaCompra;
+    accionesCompra.classList.toggle("d-flex", productoDisponibleParaCompra);
+    avisoSinPrecio.hidden = productoDisponibleParaCompra;
+
+    if (disponibilidad) {
+        campoCantidad.max = disponibilidad[1];
+        campoCantidad.dataset.unidadDisponible = disponibilidad[2].toLocaleLowerCase("es");
+    }
 }
