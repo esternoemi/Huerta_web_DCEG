@@ -33,7 +33,7 @@ if (formularioLogin && mensajeLogin) {
 
             const usuarioEncontrado = usuarios.find((usuario) =>
                 usuario.correo?.trim().toLowerCase() === correoIngresado
-+                && usuario.contrasena === contrasenaIngresada
+                && usuario.contrasena === contrasenaIngresada
             );
 
             if (usuarioEncontrado) {

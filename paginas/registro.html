@@ -25,27 +25,44 @@
                         <form class="panel row g-3" method="post" data-validacion novalidate>
                         <div class="col-md-6"><label class="form-label" for="nombre">Nombre</label><input
                             class="form-control" id="nombre" name="nombre" type="text" autocomplete="given-name"
-                            maxlength="100" required data-regla="nombre" data-mensaje="nombre-error"
+                            required data-regla="nombre" data-mensaje="nombre-error"
                             aria-describedby="nombre-error"><div class="invalid-feedback" id="nombre-error"></div>
                         </div>
                         <div class="col-md-6"><label class="form-label" for="apellido">Apellido</label><input
                             class="form-control" id="apellido" name="apellido" type="text"
-                            autocomplete="family-name" maxlength="100" required data-regla="nombre"
+                            autocomplete="family-name" required data-regla="nombre"
                             data-mensaje="apellido-error" aria-describedby="apellido-error"><div
                             class="invalid-feedback" id="apellido-error"></div></div>
                         <div class="col-12"><label class="form-label" for="correo">Correo electrónico</label><input
                             class="form-control" id="correo" name="correo" type="email" autocomplete="email"
-                            maxlength="100" required data-regla="correo" data-mensaje="correo-error"
+                            required data-regla="correo" data-mensaje="correo-error"
                             aria-describedby="correo-error"><div class="invalid-feedback" id="correo-error"></div>
                         </div>
                         <div class="col-md-6"><label class="form-label" for="contrasena">Contraseña</label><input
                             class="form-control" id="contrasena" name="contrasena" type="password"
-                            autocomplete="new-password" maxlength="15" required data-regla="contrasena"
+                            autocomplete="new-password" required data-regla="contrasena"
                             data-mensaje="contrasena-error" aria-describedby="contrasena-error"><div
-                            class="invalid-feedback" id="contrasena-error"></div></div>
+                            class="invalid-feedback" id="contrasena-error"></div>
+                            <div class="mt-2" id="requisitos-contrasena">
+                                <div class="progress" id="progreso-contrasena" role="progressbar"
+                                    aria-label="Requisitos de contraseña cumplidos" aria-valuemin="0" aria-valuemax="6"
+                                    aria-valuenow="0" aria-valuetext="0 de 6 requisitos cumplidos">
+                                    <div class="progress-bar" id="barra-progreso-contrasena" style="width: 0%"></div>
+                                </div>
+                                <p class="small mt-2 mb-1" id="resumen-progreso-contrasena" aria-live="polite">0 de 6 requisitos cumplidos.</p>
+                                <ul class="small list-unstyled mb-0">
+                                    <li class="text-body-secondary" data-requisito-contrasena="longitud"><span data-estado-requisito>Pendiente</span>: Al menos 4 caracteres</li>
+                                    <li class="text-body-secondary" data-requisito-contrasena="mayuscula"><span data-estado-requisito>Pendiente</span>: Una letra mayúscula</li>
+                                    <li class="text-body-secondary" data-requisito-contrasena="minuscula"><span data-estado-requisito>Pendiente</span>: Una letra minúscula</li>
+                                    <li class="text-body-secondary" data-requisito-contrasena="numero"><span data-estado-requisito>Pendiente</span>: Un número</li>
+                                    <li class="text-body-secondary" data-requisito-contrasena="simbolo"><span data-estado-requisito>Pendiente</span>: Un símbolo</li>
+                                    <li class="text-body-secondary" data-requisito-contrasena="maximo"><span data-estado-requisito>Pendiente</span>: Máximo 15 caracteres</li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="col-md-6"><label class="form-label" for="telefono">Número de contacto</label><input
                             class="form-control" id="telefono" name="telefono" type="tel" inputmode="numeric"
-                            autocomplete="tel" maxlength="100" required data-regla="telefono"
+                            autocomplete="tel" required data-regla="telefono"
                             data-mensaje="telefono-error" aria-describedby="telefono-error"><div
                             class="invalid-feedback" id="telefono-error"></div></div>
                         <div class="col-12"><button class="boton boton-verde" type="submit">Crear cuenta</button></div>
