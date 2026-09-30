@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huerto Hogar | Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../estilos/estilos.css">
 </head>
 
@@ -21,12 +22,18 @@
     <main class="pagina-interior">
         <div class="container">
             <p class="etiqueta">ADMINISTRACIÓN</p>
-            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
                 <div>
-                    <h1 class="h2 titulo-interior">Gestión de usuarios</h1>
+                    <h1 class="h2 mb-2">Administración</h1>
                     <p>Sesión de administrador: <strong id="administrador-actual"></strong></p>
                 </div>
             </div>
+            <section aria-labelledby="titulo-usuarios" class="mb-5">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <h2 class="h3 mb-0" id="titulo-usuarios">Gestión de usuarios</h2>
+                    <button class="btn btn-success" id="agregar-usuario" type="button" data-bs-toggle="modal"
+                        data-bs-target="#modal-usuario">Agregar usuario</button>
+                </div>
             <div id="mensaje-administracion" role="status" aria-live="polite"></div>
             <div class="table-responsive">
                 <table class="table align-middle">
@@ -34,19 +41,223 @@
                         <tr>
                             <th scope="col">Nombre</th>
                             <th scope="col">Correo</th>
+                            <th scope="col">Teléfono</th>
                             <th scope="col">Rol</th>
-                            <th scope="col">Acción</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="usuarios-administrados"></tbody>
                 </table>
             </div>
+            </section>
+            <section aria-labelledby="titulo-productos">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                    <div>
+                        <p class="etiqueta mb-1">CATÁLOGO</p>
+                        <h2 class="h3 mb-0" id="titulo-productos">Gestión de productos</h2>
+                    </div>
+                    <button class="btn btn-success" id="agregar-producto" type="button" data-bs-toggle="modal"
+                        data-bs-target="#modal-producto">Agregar producto</button>
+                </div>
+                <p id="mensaje-productos" role="status" aria-live="polite"></p>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Categoría</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productos-administrados"></tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </main>
+    <div class="modal fade" id="modal-usuario" tabindex="-1" aria-labelledby="titulo-modal-usuario"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="formulario-usuario" data-validacion novalidate>
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="titulo-modal-usuario">Agregar cliente</h2>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-run">RUN</label>
+                                <input class="form-control" id="usuario-run" name="run" type="text" autocomplete="off"
+                                    minlength="7" maxlength="9" required data-regla="run"
+                                    data-mensaje="usuario-run-error" aria-describedby="usuario-run-error">
+                                <div class="invalid-feedback" id="usuario-run-error"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-nombre">Nombre</label>
+                                <input class="form-control" id="usuario-nombre" name="nombre" type="text" maxlength="50" required
+                                    data-regla="nombre" data-maximo="50" data-mensaje="usuario-nombre-error"
+                                    aria-describedby="usuario-nombre-error">
+                                <div class="invalid-feedback" id="usuario-nombre-error"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-apellido">Apellido</label>
+                                <input class="form-control" id="usuario-apellido" name="apellido" type="text" maxlength="100" required
+                                    data-regla="nombre" data-maximo="100" data-mensaje="usuario-apellido-error"
+                                    aria-describedby="usuario-apellido-error">
+                                <div class="invalid-feedback" id="usuario-apellido-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="usuario-correo">Correo electrónico</label>
+                                <input class="form-control" id="usuario-correo" name="correo" type="email" maxlength="100" required
+                                    data-regla="correo" data-mensaje="usuario-correo-error"
+                                    aria-describedby="usuario-correo-error">
+                                <div class="invalid-feedback" id="usuario-correo-error"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-fecha-nacimiento">Fecha de nacimiento</label>
+                                <input class="form-control" id="usuario-fecha-nacimiento" name="fechaNacimiento" type="text"
+                                    placeholder="dd/mm/aaaa" inputmode="numeric" autocomplete="bday" maxlength="10"
+                                    data-fecha-nacimiento data-regla="fecha" data-mensaje="usuario-fecha-nacimiento-error"
+                                    aria-describedby="usuario-fecha-nacimiento-error">
+                                <div class="invalid-feedback" id="usuario-fecha-nacimiento-error"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-region">Región</label>
+                                <select class="form-select" id="usuario-region" name="region" data-region-select="usuario" required data-regla="seleccion"
+                                    data-mensaje="usuario-region-error" aria-describedby="usuario-region-error">
+                                    <option value="">Selecciona una región</option>
+                                </select>
+                                <div class="invalid-feedback" id="usuario-region-error"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="usuario-comuna">Comuna</label>
+                                <select class="form-select" id="usuario-comuna" name="comuna" data-comuna-select="usuario" required disabled data-regla="seleccion"
+                                    data-mensaje="usuario-comuna-error" aria-describedby="usuario-comuna-error">
+                                    <option value="">Selecciona una comuna</option>
+                                </select>
+                                <div class="invalid-feedback" id="usuario-comuna-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="usuario-direccion">Dirección</label>
+                                <textarea class="form-control" id="usuario-direccion" name="direccion" rows="2" maxlength="300"
+                                    required data-regla="direccion" data-mensaje="usuario-direccion-error"
+                                    aria-describedby="usuario-direccion-error"></textarea>
+                                <div class="invalid-feedback" id="usuario-direccion-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="usuario-telefono">Número de contacto</label>
+                                <input class="form-control" id="usuario-telefono" name="telefono" type="tel"
+                                    inputmode="numeric" required data-regla="telefono"
+                                    data-mensaje="usuario-telefono-error" aria-describedby="usuario-telefono-error">
+                                <div class="invalid-feedback" id="usuario-telefono-error"></div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="usuario-contrasena">Contraseña</label>
+                                <input class="form-control" id="usuario-contrasena" name="contrasena" type="password"
+                                    autocomplete="new-password" aria-describedby="usuario-contrasena-ayuda usuario-contrasena-error">
+                                <div class="form-text" id="usuario-contrasena-ayuda"></div>
+                                <div class="invalid-feedback" id="usuario-contrasena-error"></div>
+                            </div>
+                            <div class="col-12" id="campo-rol-usuario">
+                                <label class="form-label" for="usuario-rol">Rol</label>
+                                <select class="form-select" id="usuario-rol" name="rol" required>
+                                    <option value="cliente">Cliente</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="vendedor">Vendedor</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-success" type="submit">Guardar usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-producto" tabindex="-1" aria-labelledby="titulo-modal-producto"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <form id="formulario-producto" novalidate>
+                    <input id="producto-identificador" name="identificador" type="hidden">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="titulo-modal-producto">Agregar producto</h2>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="producto-nombre-admin">Nombre</label>
+                                <input class="form-control" id="producto-nombre-admin" name="nombre" type="text" required
+                                    maxlength="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="producto-categoria-admin">Categoría</label>
+                                <select class="form-select" id="producto-categoria-admin" name="categoria" required>
+                                    <option value="Frutas Frescas">Frutas Frescas</option>
+                                    <option value="Verduras Orgánicas">Verduras Orgánicas</option>
+                                    <option value="Productos Orgánicos">Productos Orgánicos</option>
+                                    <option value="Productos Lácteos">Productos Lácteos</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="producto-precio-admin">Precio</label>
+                                <input class="form-control" id="producto-precio-admin" name="precio" type="text"
+                                    placeholder="$1.200 por kilo" required maxlength="80">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="producto-stock-admin">Stock</label>
+                                <input class="form-control" id="producto-stock-admin" name="stock" type="number"
+                                    min="0" step="1" value="0" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="producto-unidad-admin">Unidad</label>
+                                <input class="form-control" id="producto-unidad-admin" name="unidad" type="text"
+                                    value="unidades" required maxlength="30">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="producto-origen-admin">Origen</label>
+                                <input class="form-control" id="producto-origen-admin" name="origen" type="text"
+                                    required maxlength="100">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="producto-imagen-admin">Ruta de imagen</label>
+                                <input class="form-control" id="producto-imagen-admin" name="imagen" type="text"
+                                    placeholder="../images/producto.png">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="producto-descripcion-admin">Descripción</label>
+                                <textarea class="form-control" id="producto-descripcion-admin" name="descripcion"
+                                    rows="3" required maxlength="500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-success" type="submit">Guardar producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <footer class="pie-pagina">
         <div class="container">HUERTA</div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/ubicaciones.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/es.js"></script>
+    <script src="../js/fechas.js"></script>
+    <script src="../js/validaciones.js"></script>
     <script src="../js/usuarios.js"></script>
+    <script src="../js/productos.js"></script>
     <script src="../js/administracion.js"></script>
 </body>
 

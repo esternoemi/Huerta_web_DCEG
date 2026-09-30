@@ -12,8 +12,8 @@
 <body>
     <header class="encabezado">
         <nav class="navbar">
-            <div class="container"><a class="navbar-brand marca" href="../index.html">HUERTA</a><a class="enlace"
-                    href="productos.html">Seguir comprando</a></div>
+                <div class="container"><a class="navbar-brand marca" href="../index.html">HUERTA</a><div class="d-flex gap-3 align-items-center"><a class="boton boton-claro" href="productos.html" data-contador-carrito>Carrito (0)</a><a class="enlace"
+                    href="productos.html">Seguir comprando</a></div></div>
         </nav>
     </header>
     <main class="pagina-interior">
@@ -22,17 +22,19 @@
             <h1 class="h2 titulo-interior">Carrito</h1>
             <div class="row g-4">
                 <div class="col-lg-8">
-                    <div class="tabla-vacia">COLOCAR PRODUCTOS DEL CARRITO ACA</div>
+                    <p id="mensaje-carrito" role="status" aria-live="polite"></p>
+                    <div id="carrito-vacio" class="tabla-vacia">Tu carrito está vacío.</div>
+                    <div id="items-carrito"></div>
+                    <button class="btn btn-outline-danger" id="vaciar-carrito" type="button">Vaciar carrito</button>
                 </div>
                 <div class="col-lg-4">
-                    <div class="panel">
+                    <div class="panel" id="resumen-carrito" hidden>
                         <h2 class="h4">Resumen</h2>
-                        <div class="d-flex justify-content-between mt-4"><span>Subtotal</span><strong>$ 0.000</strong>
+                        <div class="d-flex justify-content-between mt-4"><span>Subtotal</span><strong id="subtotal-carrito"></strong>
                         </div>
                         <hr>
-                        <div class="d-flex justify-content-between"><span>Total</span><strong class="precio">$
-                                0.000</strong></div><button class="boton boton-verde w-100 mt-4" type="button">Continuar
-                            compra</button>
+                        <div class="d-flex justify-content-between"><span>Total</span><strong class="precio" id="total-carrito"></strong></div>
+                        <button class="boton boton-verde w-100 mt-4" id="continuar-compra" type="button">Confirmar pedido de demostración</button>
                     </div>
                 </div>
             </div>
@@ -41,6 +43,9 @@
     <footer class="pie-pagina">
         <div class="container">HUERTA</div>
     </footer>
+    <script src="../js/productos.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/carrito.js"></script>
 </body>
 
 </html>

@@ -1,10 +1,15 @@
 const configuracionValidacion = {
     limites: {
         texto: 100,
+        nombre: 50,
         contrasenaMinima: 4,
-        contrasenaMaxima: 15,
+        contrasenaMaxima: 10,
         telefonoMinimo: 9,
-        mensaje: 200,
+        mensaje: 500,
+        runMinimo: 7,
+        runMaximo: 9,
+        direccion: 300,
+        fechaNacimiento: 10,
         cantidadMinima: 1
     },
     mensajes: {
@@ -13,6 +18,11 @@ const configuracionValidacion = {
         requeridoContrasena: "Ingresa tu contraseña.",
         requeridoTelefono: "Ingresa tu número de contacto.",
         requeridoMensaje: "Escribe un mensaje antes de enviar.",
+        requeridoRun: "Ingresa tu RUN sin puntos ni guion.",
+        run: "Ingresa un RUN válido, sin puntos ni guion (ej.: 19011022K).",
+        requeridoDireccion: "Ingresa tu dirección.",
+        requeridoSeleccion: "Selecciona una opción.",
+        fechaNacimiento: "Ingresa una fecha válida con formato dd/mm/aaaa.",
         requeridoCantidad: "Ingresa una cantidad.",
         nombre: "Usa solo letras, incluidas tildes, y espacios.",
         correo: "Usa un correo válido, por ejemplo nombre.apellido@dominio.com.",
@@ -40,7 +50,10 @@ const limitesPorRegla = {
     correo: configuracionValidacion.limites.texto,
     contrasena: configuracionValidacion.limites.contrasenaMaxima,
     telefono: configuracionValidacion.limites.texto,
-    mensaje: configuracionValidacion.limites.mensaje
+    mensaje: configuracionValidacion.limites.mensaje,
+    run: configuracionValidacion.limites.runMaximo,
+    direccion: configuracionValidacion.limites.direccion,
+    fecha: configuracionValidacion.limites.fechaNacimiento
 };
 
 const mensajes = configuracionValidacion.mensajes;
@@ -111,14 +124,60 @@ const reglasValidacion = {
     correo: (valor) => {
         const correoLimpio = valor.trim();
         const formatoCorreo = /^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+        const dominiosPermitidos = ["duoc.cl", "profesor.duoc.cl", "gmail.com"];
 
         if (!correoLimpio) {
             return mensajes.requeridoCorreo;
         }
 
-        return formatoCorreo.test(correoLimpio)
+        const dominio = correoLimpio.split("@")[1]?.toLocaleLowerCase("es");
+
+        return formatoCorreo.test(correoLimpio) && dominiosPermitidos.includes(dominio)
             ? ""
             : mensajes.correo;
+    },
+    run: (valor) => {
+        const run = valor.trim().toLocaleUpperCase("es");
+        const limites = configuracionValidacion.limites;
+
+        if (!run) {
+            return mensajes.requeridoRun;
+        }
+
+        if (run.length < limites.runMinimo || run.length > limites.runMaximo || !/^\d{6,8}[0-9K]$/u.test(run)) {
+            return mensajes.run;
+        }
+
+        const digitos = run.slice(0, -1).split("").reverse();
+        const suma = digitos.reduce((total, digito, indice) => total + Number(digito) * (indice % 6 + 2), 0);
+        const resultado = 11 - (suma % 11);
+        const digitoVerificador = resultado === 11 ? "0" : resultado === 10 ? "K" : String(resultado);
+
+        return run.endsWith(digitoVerificador) ? "" : mensajes.run;
+    },
+    direccion: (valor) => valor.trim() ? "" : mensajes.requeridoDireccion,
+    seleccion: (valor) => valor ? "" : mensajes.requeridoSeleccion,
+    fecha: (valor) => {
+        const fechaIngresada = valor.trim();
+
+        if (!fechaIngresada) {
+            return "";
+        }
+
+        const partes = /^(\d{2})\/(\d{2})\/(\d{4})$/u.exec(fechaIngresada);
+
+        if (!partes) {
+            return mensajes.fechaNacimiento;
+        }
+
+        const dia = Number(partes[1]);
+        const mes = Number(partes[2]);
+        const anio = Number(partes[3]);
+        const fecha = new Date(anio, mes - 1, dia);
+
+        return fecha.getFullYear() === anio && fecha.getMonth() === mes - 1 && fecha.getDate() === dia
+            ? ""
+            : mensajes.fechaNacimiento;
     },
     contrasena: (valor) => {
         if (!valor) {
@@ -238,7 +297,7 @@ function validarCampo(campo) {
     actualizarProgresoContrasena(campo);
     const regla = reglasValidacion[campo.dataset.regla];
     const mensaje = regla ? regla(campo.value, campo) : "";
-    const longitudMaxima = limitesPorRegla[campo.dataset.regla];
+    const longitudMaxima = Number(campo.dataset.maximo) || limitesPorRegla[campo.dataset.regla];
     const mensajeFinal = mensaje || (longitudMaxima && campo.value.length > longitudMaxima
         ? mensajes.longitudMaxima(longitudMaxima)
         : "");

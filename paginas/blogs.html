@@ -25,7 +25,7 @@
                         <li class="nav-item"><a class="nav-link activo" href="blogs.html">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
                         <li class="nav-item"><a class="boton boton-claro" href="login.html">Ingresar</a></li>
-                        <li class="nav-item"><a class="boton boton-verde" href="carrito.html">Carrito (0)</a></li>
+                        <li class="nav-item"><a class="boton boton-verde" href="carrito.html" data-contador-carrito>Carrito (0)</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,21 +42,23 @@
                 </div>
 
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-4">
+                    <div class="col-md-6 col-lg-6">
                         <article class="tarjeta-blog h-100">
+                            <div class="imagen-blog"><img src="../images/VR002 - espinacaFresca.png" alt="Espinaca fresca para una pizza casera"></div>
                             <div class="contenido-blog">
                                 <h2 class="h5">Pizzas de Espinaca con Salsa Blanca</h2>
-
-                                <p>
-                                    Una pizza refinada y reconfortante que combina una suave crema de salsa blanca 
-                                    casera con espinacas frescas salteadas al ajo y queso fundido sobre una masa crujiente. 
-                                    Una opción cremosa, vegetariana y gourmet que conquistará a los amantes del buen sabor.
-                                </p>
-
-                                <a class="boton boton-verde" href="https://www.youtube.com/watch?v=VaKoXwXfXnU"
-                                    target="_blank">
-                                    Ver video en YouTube
-                                </a>
+                                <p>Una receta casera que combina espinacas salteadas, salsa blanca y una masa crujiente para compartir.</p>
+                                <a class="boton boton-verde" href="detalle-blog-espinaca.html">Leer artículo</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <article class="tarjeta-blog h-100">
+                            <div class="imagen-blog"><img src="../images/FR003 - platanosCavendish.png" alt="Plátanos Cavendish frescos"></div>
+                            <div class="contenido-blog">
+                                <h2 class="h5">Frutas de temporada en tu mesa</h2>
+                                <p>Ideas sencillas para elegir, conservar y aprovechar frutas frescas durante la semana.</p>
+                                <a class="boton boton-verde" href="detalle-blog-frutas.html">Leer artículo</a>
                             </div>
                         </article>
                     </div>
@@ -72,6 +74,7 @@
                 LOS DERECHOS RESERVADOS</span></div>
     </footer>
     <script src="../js/menu.js"></script>
+    <script src="../js/carrito.js"></script>
 
 </body>
 

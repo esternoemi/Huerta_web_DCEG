@@ -10,11 +10,16 @@ if (formularioRegistro && mensajeRegistro) {
         }
 
         const usuarioNuevo = {
+            run: formularioRegistro.elements.run.value.trim().toLocaleUpperCase("es"),
             nombre: formularioRegistro.elements.nombre.value.trim(),
             apellido: formularioRegistro.elements.apellido.value.trim(),
             correo: formularioRegistro.elements.correo.value.trim().toLowerCase(),
             contrasena: formularioRegistro.elements.contrasena.value,
-            telefono: formularioRegistro.elements.telefono.value,
+            telefono: formularioRegistro.elements.telefono.value.trim(),
+            fechaNacimiento: formularioRegistro.elements.fechaNacimiento.value,
+            region: formularioRegistro.elements.region.value,
+            comuna: formularioRegistro.elements.comuna.value,
+            direccion: formularioRegistro.elements.direccion.value.trim(),
             rol: "cliente"
         };
 
@@ -33,6 +38,9 @@ if (formularioRegistro && mensajeRegistro) {
             usuariosGuardados.push(usuarioNuevo);
             guardarUsuariosLocales(usuariosGuardados);
             formularioRegistro.reset();
+            establecerFechaNacimiento(formularioRegistro.elements.fechaNacimiento, "");
+            formularioRegistro.elements.region.dispatchEvent(new Event("change", { bubbles: true }));
+            formularioRegistro.querySelectorAll("[data-regla]").forEach((campo) => limpiarError(campo));
             actualizarProgresoContrasena(formularioRegistro.elements.contrasena);
             mensajeRegistro.textContent = "Cuenta creada en este navegador. Ya puedes ingresar.";
             mensajeRegistro.className = "alert alert-success mt-3";

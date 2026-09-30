@@ -1,30 +1,32 @@
 const botonMenu = document.querySelector('#boton-menu');
 const menuPrincipal = document.querySelector('#menu-principal');
+let sesionUsuario = null;
 
-if (menuPrincipal) {
-    try {
-        const sesionUsuario = JSON.parse(sessionStorage.getItem("huertaSesion") || "null");
+try {
+    sesionUsuario = JSON.parse(sessionStorage.getItem("huertaSesion") || "null");
+} catch {
+    sessionStorage.removeItem("huertaSesion");
+}
 
-        if (sesionUsuario?.rol === "administrador") {
-            const listaNavegacion = menuPrincipal.querySelector(".navbar-nav");
+const estaEnPaginas = window.location.pathname.includes("/paginas/");
+const paginaVendedor = window.location.pathname.endsWith("/vendedor.html");
 
-            if (listaNavegacion && !document.getElementById("enlace-administracion")) {
-                const elementoNavegacion = document.createElement("li");
-                const enlaceAdministracion = document.createElement("a");
+if (sesionUsuario?.rol === "vendedor" && !paginaVendedor) {
+    window.location.replace(estaEnPaginas ? "vendedor.html" : "paginas/vendedor.html");
+} else if (menuPrincipal && sesionUsuario?.rol === "administrador") {
+    const listaNavegacion = menuPrincipal.querySelector(".navbar-nav");
 
-                elementoNavegacion.className = "nav-item";
-                enlaceAdministracion.id = "enlace-administracion";
-                enlaceAdministracion.className = "boton boton-claro";
-                enlaceAdministracion.href = window.location.pathname.includes("/paginas/")
-                    ? "administracion.html"
-                    : "paginas/administracion.html";
-                enlaceAdministracion.textContent = "Administración";
-                elementoNavegacion.append(enlaceAdministracion);
-                listaNavegacion.append(elementoNavegacion);
-            }
-        }
-    } catch {
-        sessionStorage.removeItem("huertaSesion");
+    if (listaNavegacion && !document.getElementById("enlace-administracion")) {
+        const elementoNavegacion = document.createElement("li");
+        const enlaceAdministracion = document.createElement("a");
+
+        elementoNavegacion.className = "nav-item";
+        enlaceAdministracion.id = "enlace-administracion";
+        enlaceAdministracion.className = "boton boton-claro";
+        enlaceAdministracion.href = estaEnPaginas ? "administracion.html" : "paginas/administracion.html";
+        enlaceAdministracion.textContent = "Administración";
+        elementoNavegacion.append(enlaceAdministracion);
+        listaNavegacion.append(elementoNavegacion);
     }
 }
 

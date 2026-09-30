@@ -25,7 +25,7 @@
                         <li class="nav-item"><a class="nav-link" href="blogs.html">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
                         <li class="nav-item"><a class="boton boton-claro" href="login.html">Ingresar</a></li>
-                        <li class="nav-item"><a class="boton boton-verde" href="carrito.html">Carrito (0)</a></li>
+                        <li class="nav-item"><a class="boton boton-verde" href="carrito.html" data-contador-carrito>Carrito (0)</a></li>
                     </ul>
                 </div>
             </div>
@@ -39,14 +39,14 @@
                 <div class="col-lg-5">
                     <p class="etiqueta">HABLEMOS</p>
                     <h1 class="h2">Contacto</h1>
-                    <p>COLOCAR INFORMACIÓN DE CONTACTO ACA</p>
+                    <p>¿Tienes preguntas sobre nuestros productos o entregas? Cuéntanos qué necesitas y envíanos un mensaje desde el formulario.</p>
                     <div class="mt-4">
-                        <p><strong>Correo</strong><br>correo@ejemplo.com</p>
-                        <p><strong>Horario</strong><br>COLOCAR HORARIO ACA</p>
+                        <p><strong>Cobertura</strong><br>Atendemos pedidos en Santiago, Puerto Montt, Villarrica, Nacimiento, Viña del Mar, Valparaíso y Concepción.</p>
+                        <p><strong>Consultas</strong><br>El formulario permite guardar tu mensaje en este navegador para esta demostración.</p>
                     </div>
                 </div>
                 <div class="col-lg-7">
-                        <form class="panel" method="post" data-validacion novalidate>
+                        <form class="panel" data-validacion data-contacto novalidate>
                         <div class="mb-3"><label class="form-label" for="nombre">Nombre</label><input
                             class="form-control" id="nombre" name="nombre" type="text" autocomplete="name"
                             required data-regla="nombre" data-mensaje="nombre-error"
@@ -58,11 +58,12 @@
                             aria-describedby="correo-error"><div class="invalid-feedback" id="correo-error"></div>
                         </div>
                         <div class="mb-3"><label class="form-label" for="mensaje">Mensaje</label><textarea
-                            class="form-control" id="mensaje" name="mensaje" rows="5" required
+                            class="form-control" id="mensaje" name="mensaje" rows="5" maxlength="500" required
                             data-regla="mensaje" data-mensaje="mensaje-error" data-contador="mensaje-contador"
                             aria-describedby="mensaje-error mensaje-contador"></textarea><div
                             class="invalid-feedback" id="mensaje-error"></div><div class="form-text"
-                            id="mensaje-contador">0/200 caracteres</div></div><button
+                            id="mensaje-contador">0/500 caracteres</div></div>
+                        <div class="mb-3" id="mensaje-contacto" role="status" aria-live="polite"></div><button
                             class="boton boton-verde" type="submit">Enviar mensaje</button>
                     </form>
                 </div>
@@ -79,6 +80,8 @@
 
     <script src="../js/validaciones.js"></script>
     <script src="../js/menu.js"></script>
+    <script src="../js/carrito.js"></script>
+    <script src="../js/contacto.js"></script>
 </body>
 
 </html>

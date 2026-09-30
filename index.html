@@ -24,7 +24,7 @@
                         <li class="nav-item"><a class="nav-link" href="paginas/blogs.html">Blogs</a></li>
                         <li class="nav-item"><a class="nav-link" href="paginas/contacto.html">Contacto</a></li>
                         <li class="nav-item"><a class="boton boton-claro" href="paginas/login.html">Ingresar</a></li>
-                        <li class="nav-item"><a class="boton boton-verde" href="paginas/carrito.html">Carrito (0)</a></li>
+                        <li class="nav-item"><a class="boton boton-verde" href="paginas/carrito.html" data-contador-carrito>Carrito (0)</a></li>
                     </ul>
                 </div>
             </div>
@@ -128,6 +128,20 @@
         </section>
 
 
+        <section class="seccion-clara">
+            <div class="container">
+                <div class="encabezado-seccion">
+                    <div>
+                        <p class="etiqueta">SELECCIÓN DE TEMPORADA</p>
+                        <h2>Productos destacados</h2>
+                    </div>
+                    <a class="enlace" href="paginas/productos.html">Ver catálogo</a>
+                </div>
+                <p id="mensaje-carrito" role="status" aria-live="polite"></p>
+                <div class="row g-4" id="productos-destacados"></div>
+            </div>
+        </section>
+
         <section class="seccion-verde">
             <div class="container fila-llamada">
                 <div>
@@ -145,7 +159,9 @@
     </footer>
 
 
+    <script src="js/productos.js"></script>
     <script src="js/menu.js"></script>
+    <script src="js/carrito.js"></script>
 </body>
 
 </html>

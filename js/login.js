@@ -37,11 +37,18 @@ if (formularioLogin && mensajeLogin) {
         );
 
         if (usuarioEncontrado) {
-            const rolUsuario = usuarioEncontrado.rol === "administrador" ? "administrador" : "cliente";
+            const rolUsuario = ["administrador", "vendedor"].includes(usuarioEncontrado.rol)
+                ? usuarioEncontrado.rol
+                : "cliente";
             guardarSesionUsuario({ ...usuarioEncontrado, rol: rolUsuario });
 
             if (rolUsuario === "administrador") {
                 window.location.href = "administracion.html";
+                return;
+            }
+
+            if (rolUsuario === "vendedor") {
+                window.location.href = "vendedor.html";
                 return;
             }
 

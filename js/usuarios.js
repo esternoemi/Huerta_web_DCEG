@@ -2,8 +2,8 @@ const usuariosDemostracion = [
     {
         nombre: "Usuario",
         apellido: "Prueba",
-        correo: "prueba@huertahogar.cl",
-        contrasena: "Huerta#2026",
+        correo: "prueba@gmail.com",
+        contrasena: "Huerta#26",
         telefono: "912345678",
         rol: "administrador"
     }
@@ -31,7 +31,7 @@ function guardarSesionUsuario(usuario) {
     const sesion = {
         correo: usuario.correo,
         nombre: usuario.nombre,
-        rol: usuario.rol === "administrador" ? "administrador" : "cliente"
+        rol: ["administrador", "vendedor"].includes(usuario.rol) ? usuario.rol : "cliente"
     };
 
     sessionStorage.setItem(claveSesionUsuario, JSON.stringify(sesion));

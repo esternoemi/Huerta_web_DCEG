@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huerto Hogar | Panel vendedor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../estilos/estilos.css">
+</head>
+
+<body>
+    <header class="encabezado">
+        <nav class="navbar">
+            <div class="container d-flex flex-wrap justify-content-between gap-3">
+                <a class="navbar-brand marca marca-vendedor" href="vendedor.html?vista=productos">HUERTO HOGAR | VENTAS</a>
+                <div class="d-flex align-items-center gap-3">
+                    <span id="vendedor-actual"></span>
+                    <button class="btn btn-outline-secondary btn-sm" id="cerrar-sesion-vendedor" type="button">Cerrar sesión</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="pagina-interior">
+        <div class="container">
+            <p class="etiqueta">CONSULTA</p>
+            <h1 class="h2 mb-4">Panel vendedor</h1>
+            <div class="layout-vendedor">
+                <nav class="menu-vendedor" aria-label="Secciones del panel vendedor">
+                    <a class="nav-link" href="vendedor.html?vista=productos" data-vista-vendedor="productos">Productos</a>
+                    <a class="nav-link" href="vendedor.html?vista=ordenes" data-vista-vendedor="ordenes">Órdenes</a>
+                </nav>
+                <div>
+                    <p id="mensaje-vendedor" role="status" aria-live="polite"></p>
+                    <section id="seccion-productos-vendedor" aria-labelledby="titulo-productos-vendedor">
+                        <h2 class="h3" id="titulo-productos-vendedor">Productos</h2>
+                        <p class="text-body-secondary">Consulta el catálogo y la disponibilidad actual.</p>
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr><th scope="col">Código</th><th scope="col">Producto</th><th scope="col">Categoría</th><th scope="col">Precio</th><th scope="col">Stock</th><th scope="col">Detalle</th></tr>
+                                </thead>
+                                <tbody id="productos-vendedor"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section id="detalle-producto-vendedor" aria-labelledby="nombre-producto-vendedor" hidden>
+                        <a class="miga" href="vendedor.html?vista=productos">Volver a productos</a>
+                        <div class="row g-4 mt-2 align-items-center">
+                            <div class="col-lg-6"><div class="imagen-detalle"><img id="imagen-producto-vendedor" alt=""></div></div>
+                            <div class="col-lg-6">
+                                <p class="etiqueta" id="categoria-producto-vendedor"></p>
+                                <h2 class="h3" id="nombre-producto-vendedor"></h2>
+                                <p class="precio fs-5" id="precio-producto-vendedor"></p>
+                                <p id="descripcion-producto-vendedor"></p>
+                                <p><strong>Origen:</strong> <span id="origen-producto-vendedor"></span></p>
+                                <p><strong>Disponibilidad:</strong> <span id="stock-producto-vendedor"></span></p>
+                            </div>
+                        </div>
+                    </section>
+                    <section id="seccion-ordenes-vendedor" aria-labelledby="titulo-ordenes-vendedor" hidden>
+                        <h2 class="h3" id="titulo-ordenes-vendedor">Órdenes</h2>
+                        <p class="text-body-secondary">Consulta los pedidos generados por la tienda.</p>
+                        <p id="ordenes-vacias" class="tabla-vacia" hidden>No hay órdenes registradas.</p>
+                        <div class="table-responsive" id="tabla-ordenes-contenedor">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr><th scope="col">Número</th><th scope="col">Fecha</th><th scope="col">Cliente</th><th scope="col">Estado</th><th scope="col">Total</th><th scope="col">Detalle</th></tr>
+                                </thead>
+                                <tbody id="ordenes-vendedor"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                    <section id="detalle-orden-vendedor" aria-labelledby="titulo-detalle-orden-vendedor" hidden>
+                        <a class="miga" href="vendedor.html?vista=ordenes">Volver a órdenes</a>
+                        <h2 class="h3 mt-3" id="titulo-detalle-orden-vendedor"></h2>
+                        <p><strong>Fecha:</strong> <span id="fecha-orden-vendedor"></span></p>
+                        <p><strong>Cliente:</strong> <span id="cliente-orden-vendedor"></span></p>
+                        <p><strong>Correo:</strong> <span id="correo-orden-vendedor"></span></p>
+                        <p><strong>Estado:</strong> <span id="estado-orden-vendedor"></span></p>
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead><tr><th scope="col">Producto</th><th scope="col">Cantidad</th><th scope="col">Precio unitario</th><th scope="col">Subtotal</th></tr></thead>
+                                <tbody id="lineas-orden-vendedor"></tbody>
+                            </table>
+                        </div>
+                        <p class="precio fs-5">Total: <span id="total-orden-vendedor"></span></p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="pie-pagina"><div class="container">HUERTO HOGAR</div></footer>
+    <script src="../js/usuarios.js"></script>
+    <script src="../js/productos.js"></script>
+    <script src="../js/vendedor.js"></script>
+</body>
+
+</html>
