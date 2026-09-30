@@ -344,6 +344,13 @@ p {
     display: block;
 }
 
+.imagen-nosotros img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
 .contenido-producto {
     padding: 1.2rem;
 }
