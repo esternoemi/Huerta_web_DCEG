@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { CategoryProvider } from "./context/CategoryContext.jsx";
+import { OrderProvider } from "./context/OrderContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
@@ -19,7 +20,8 @@ export default function App() {
       <ProductProvider>
         <CategoryProvider>
           <CartProvider>
-            <Routes>
+            <OrderProvider>
+              <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Page title="Inicio" />} />
                 <Route path="/productos" element={<ProductsPage />} />
@@ -132,7 +134,8 @@ export default function App() {
                 />
               </Route>
               <Route path="*" element={<Page title="Página no encontrada" />} />
-            </Routes>
+              </Routes>
+            </OrderProvider>
           </CartProvider>
         </CategoryProvider>
       </ProductProvider>
