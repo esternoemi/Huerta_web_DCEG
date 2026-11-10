@@ -1,122 +1,120 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import AdminLayout from "./layouts/AdminLayout.jsx";
+import PublicLayout from "./layouts/PublicLayout.jsx";
+import PlaceholderPage from "./pages/PlaceholderPage.jsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+function Page({ title }) {
+  return <PlaceholderPage title={title} />;
 }
 
-export default App
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Page title="Inicio" />} />
+        <Route path="/productos" element={<Page title="Productos" />} />
+        <Route
+          path="/productos/:id"
+          element={<Page title="Detalle del producto" />}
+        />
+        <Route path="/categorias" element={<Page title="Categorías" />} />
+        <Route
+          path="/categorias/:slug"
+          element={<Page title="Categoría" />}
+        />
+        <Route path="/ofertas" element={<Page title="Ofertas" />} />
+        <Route path="/carrito" element={<Page title="Carrito" />} />
+        <Route path="/checkout" element={<Page title="Checkout" />} />
+        <Route
+          path="/compra/:resultado/:id"
+          element={<Page title="Resultado de compra" />}
+        />
+        <Route path="/nosotros" element={<Page title="Nosotros" />} />
+        <Route path="/blogs" element={<Page title="Blogs" />} />
+        <Route
+          path="/blogs/:slug"
+          element={<Page title="Detalle del blog" />}
+        />
+        <Route path="/contacto" element={<Page title="Contacto" />} />
+        <Route path="/login" element={<Page title="Iniciar sesión" />} />
+        <Route path="/registro" element={<Page title="Registro" />} />
+      </Route>
+
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Page title="Dashboard" />} />
+        <Route path="ordenes" element={<Page title="Órdenes" />} />
+        <Route
+          path="ordenes/:id"
+          element={<Page title="Detalle de orden/boleta" />}
+        />
+        <Route path="productos" element={<Page title="Productos" />} />
+        <Route
+          path="productos/nuevo"
+          element={<Page title="Nuevo producto" />}
+        />
+        <Route
+          path="productos/criticos"
+          element={<Page title="Productos críticos" />}
+        />
+        <Route
+          path="productos/reportes"
+          element={<Page title="Reportes de productos" />}
+        />
+        <Route
+          path="productos/:id/editar"
+          element={<Page title="Editar producto" />}
+        />
+        <Route
+          path="productos/:id"
+          element={<Page title="Detalle de producto" />}
+        />
+        <Route path="categorias" element={<Page title="Categorías" />} />
+        <Route
+          path="categorias/nueva"
+          element={<Page title="Nueva categoría" />}
+        />
+        <Route
+          path="categorias/:id/editar"
+          element={<Page title="Editar categoría" />}
+        />
+        <Route path="usuarios" element={<Page title="Usuarios" />} />
+        <Route
+          path="usuarios/nuevo"
+          element={<Page title="Nuevo usuario" />}
+        />
+        <Route
+          path="usuarios/:id/editar"
+          element={<Page title="Editar usuario" />}
+        />
+        <Route
+          path="usuarios/:id/compras"
+          element={<Page title="Historial de compras" />}
+        />
+        <Route
+          path="usuarios/:id"
+          element={<Page title="Detalle de usuario" />}
+        />
+        <Route path="reportes" element={<Page title="Reportes" />} />
+        <Route path="perfil" element={<Page title="Perfil" />} />
+      </Route>
+
+      <Route
+        path="/vendedor/productos"
+        element={<Page title="Productos para vendedor" />}
+      />
+      <Route
+        path="/vendedor/productos/:id"
+        element={<Page title="Detalle de producto para vendedor" />}
+      />
+      <Route
+        path="/vendedor/ordenes"
+        element={<Page title="Órdenes para vendedor" />}
+      />
+      <Route
+        path="/vendedor/ordenes/:id"
+        element={<Page title="Detalle de orden para vendedor" />}
+      />
+      <Route path="*" element={<Page title="Página no encontrada" />} />
+    </Routes>
+  );
+}
