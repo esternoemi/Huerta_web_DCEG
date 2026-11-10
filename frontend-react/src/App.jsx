@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import PlaceholderPage from "./pages/PlaceholderPage.jsx";
+import ProductsPage from "./pages/ProductsPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -12,7 +13,7 @@ export default function App() {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Page title="Inicio" />} />
-        <Route path="/productos" element={<Page title="Productos" />} />
+        <Route path="/productos" element={<ProductsPage />} />
         <Route
           path="/productos/:id"
           element={<Page title="Detalle del producto" />}
