@@ -146,25 +146,34 @@ const CartPage = () => {
                         </table>
                     </div>
 
-                    <div className="text-end mt-4">
-                        <h3>
+                    <div className="mt-4">
+                        <h3 className="text-end">
                             Total: {formatoCLP(total)}
                         </h3>
 
-                        <button
-                            type="button"
-                            className="btn btn-outline-danger me-2"
-                            onClick={limpiarCarrito}
-                        >
-                            Vaciar carrito
-                        </button>
+                        <div className="d-flex flex-wrap justify-content-end gap-2">
+                            <Link
+                                to="/productos"
+                                className="btn btn-outline-success"
+                            >
+                                Seguir comprando
+                            </Link>
 
-                        <Link
-                            to="/checkout"
-                            className="btn btn-success"
-                        >
-                            Continuar compra
-                        </Link>
+                            <button
+                                type="button"
+                                className="btn btn-outline-danger"
+                                onClick={limpiarCarrito}
+                            >
+                                Vaciar carrito
+                            </button>
+
+                            <Link
+                                to="/checkout"
+                                className="btn btn-success"
+                            >
+                                Continuar compra
+                            </Link>
+                        </div>
                     </div>
                 </>
             )}

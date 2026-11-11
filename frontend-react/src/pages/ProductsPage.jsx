@@ -1,16 +1,21 @@
 import { useState } from "react";
 import ProductCard from "../components/catalog/ProductCard.jsx";
 import { useProducts } from "../context/useProducts.js";
+import { useCategories } from "../context/useCategories.js";
 
 const ProductsPage = () => {
     const { productos, error } = useProducts();
+    const { categorias, error: errorCategorias } = useCategories();
     const [busqueda, setBusqueda] = useState("");
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("");
 
     const productosFiltrados = productos.filter((producto) =>
         producto.activo &&
         producto.nombre
             .toLowerCase()
-            .includes(busqueda.toLowerCase())
+            .includes(busqueda.toLowerCase()) &&
+        (!categoriaSeleccionada ||
+            producto.categoriaId === categoriaSeleccionada)
     );
 
     return (
@@ -19,8 +24,8 @@ const ProductsPage = () => {
                 Nuestros Productos
             </h1>
 
-            <div className="row mb-4">
-                <div className="col-md-6 mx-auto">
+            <div className="row g-3 mb-4">
+                <div className="col-md-6">
                     <input
                         type="search"
                         className="form-control"
@@ -30,22 +35,41 @@ const ProductsPage = () => {
                         onChange={(e) => setBusqueda(e.target.value)}
                     />
                 </div>
+                <div className="col-md-6">
+                    <label htmlFor="filtro-categoria" className="visually-hidden">
+                        Filtrar por categoría
+                    </label>
+                    <select
+                        id="filtro-categoria"
+                        className="form-select"
+                        value={categoriaSeleccionada}
+                        onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+                        aria-label="Filtrar productos por categoría"
+                    >
+                        <option value="">Todas las categorías</option>
+                        {categorias.map((categoria) => (
+                            <option key={categoria.id} value={categoria.id}>
+                                {categoria.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
-            {error && (
+            {(error || errorCategorias) && (
                 <div className="alert alert-danger" role="alert">
-                    {error}
+                    {error || errorCategorias}
                 </div>
             )}
 
-            {!error && productosFiltrados.length === 0 && (
+            {!error && !errorCategorias && productosFiltrados.length === 0 && (
                 <div className="alert alert-info text-center">
                     No se encontraron productos.
                 </div>
             )}
 
             <div className="row g-4">
-                {!error && productosFiltrados.map((producto) => (
+                {!error && !errorCategorias && productosFiltrados.map((producto) => (
                     <div
                         className="col-12 col-md-6 col-lg-4"
                         key={producto.id}

@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/useCart.js";
 
 const ProductCard = ({ product }) => {
@@ -74,32 +75,39 @@ const ProductCard = ({ product }) => {
                         <p className="text-muted">
                             {product.unidadVenta}
                         </p>
-
-                        {product.stock === 0 && (
-                            <p className="text-danger">Sin stock</p>
-                        )}
-
-                        <button
-                            type="button"
-                            className="btn btn-success mt-auto"
-                            disabled={!comprable}
-                            onClick={agregarAlCarrito}
-                        >
-                            Agregar al carrito
-                        </button>
-
-                        {mensaje && (
-                            <p className="text-success mt-2" role="status">
-                                {mensaje}
-                            </p>
-                        )}
-
-                        {error && (
-                            <p className="text-danger mt-2" role="alert">
-                                {error}
-                            </p>
-                        )}
                     </>
+                )}
+
+                {product.stock === 0 && !product.proximo && (
+                    <p className="text-danger">Sin stock</p>
+                )}
+
+                <Link
+                    to={`/productos/${encodeURIComponent(product.id)}`}
+                    className="btn btn-outline-success mt-auto"
+                >
+                    Ver detalle
+                </Link>
+
+                <button
+                    type="button"
+                    className="btn btn-success mt-2"
+                    disabled={!comprable}
+                    onClick={agregarAlCarrito}
+                >
+                    Agregar al carrito
+                </button>
+
+                {mensaje && (
+                    <p className="text-success mt-2" role="status">
+                        {mensaje}
+                    </p>
+                )}
+
+                {error && (
+                    <p className="text-danger mt-2" role="alert">
+                        {error}
+                    </p>
                 )}
             </div>
         </div>

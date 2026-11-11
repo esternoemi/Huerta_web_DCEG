@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/estilos.css";
+import "./styles/views.css";
 import App from "./App.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
