@@ -63,9 +63,9 @@ export default function PublicLayout() {
           </div>
         </nav>
       </header>
-      <main>
+      <div>
         <Outlet />
-      </main>
+      </div>
       <footer className="pie-pagina">
         <div className="container">Huerto Hogar</div>
       </footer>
