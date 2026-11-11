@@ -21,6 +21,7 @@ import CategoryPage from "./pages/CategoryPage.jsx";
 import OffersPage from "./pages/OffersPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import BlogListPage from "./pages/BlogListPage.jsx";
+import BlogDetailPage from "./pages/BlogDetailPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -64,7 +65,7 @@ export default function App() {
                     />
                     <Route
                       path="/blogs/:slug"
-                      element={<Page title="Detalle del blog" />}
+                      element={<BlogDetailPage />}
                     />
                     <Route
                       path="/contacto"
