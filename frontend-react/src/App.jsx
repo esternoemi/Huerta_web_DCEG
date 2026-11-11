@@ -20,6 +20,7 @@ import CategoriesPage from "./pages/CategoriesPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import OffersPage from "./pages/OffersPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
+import BlogListPage from "./pages/BlogListPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -59,7 +60,7 @@ export default function App() {
                     <Route path="/nosotros" element={<AboutPage />} />
                     <Route
                       path="/blogs"
-                      element={<Page title="Blogs" />}
+                      element={<BlogListPage />}
                     />
                     <Route
                       path="/blogs/:slug"
