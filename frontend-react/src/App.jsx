@@ -11,6 +11,8 @@ import PlaceholderPage from "./pages/PlaceholderPage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import { RequireRole } from "./routes/RequireRole.jsx";
+import CheckoutPage from "./pages/CheckoutPage.jsx";
+import PurchaseResultPage from "./pages/PurchaseResultPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -39,10 +41,10 @@ export default function App() {
                 />
                 <Route path="/ofertas" element={<Page title="Ofertas" />} />
                 <Route path="/carrito" element={<CartPage />} />
-                <Route path="/checkout" element={<Page title="Checkout" />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
                 <Route
                   path="/compra/:resultado/:id"
-                  element={<Page title="Resultado de compra" />}
+                  element={<PurchaseResultPage />}
                 />
                 <Route path="/nosotros" element={<Page title="Nosotros" />} />
                 <Route path="/blogs" element={<Page title="Blogs" />} />
