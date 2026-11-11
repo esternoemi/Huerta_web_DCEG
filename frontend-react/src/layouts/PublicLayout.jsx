@@ -34,6 +34,9 @@ export default function PublicLayout() {
               <Link to="/productos">Productos</Link>
               <Link to="/categorias">Categorías</Link>
               <Link to="/ofertas">Ofertas</Link>
+              <Link to="/nosotros">Nosotros</Link>
+              <Link to="/blogs">Blogs</Link>
+              <Link to="/contacto">Contacto</Link>
               <Link
                 to="/carrito"
                 aria-label={`Carrito de compras, ${cantidadTotal} productos`}
