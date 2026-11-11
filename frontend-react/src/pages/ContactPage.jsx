@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { contactService, validarContacto } from "../services/contactService.js";
 
 const ContactPage = () => {
   const [formulario, setFormulario] = useState({
@@ -27,36 +27,12 @@ const ContactPage = () => {
     setConfirmacion("");
   };
 
-  const validarFormulario = () => {
-    const nuevosErrores = {};
-
-    if (formulario.nombre.trim().length < 2) {
-      nuevosErrores.nombre = "Ingresa un nombre de al menos 2 caracteres.";
-    }
-
-    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!correoValido.test(formulario.correo.trim())) {
-      nuevosErrores.correo = "Ingresa un correo electrónico válido.";
-    }
-
-    if (formulario.mensaje.trim().length < 10) {
-      nuevosErrores.mensaje =
-        "El mensaje debe contener al menos 10 caracteres.";
-    } else if (formulario.mensaje.length > 500) {
-      nuevosErrores.mensaje =
-        "El mensaje no puede superar los 500 caracteres.";
-    }
-
-    return nuevosErrores;
-  };
-
   const enviarFormulario = (e) => {
     e.preventDefault();
 
     setConfirmacion("");
 
-    const nuevosErrores = validarFormulario();
+    const nuevosErrores = validarContacto(formulario);
     setErrores(nuevosErrores);
 
     if (Object.keys(nuevosErrores).length > 0) {
@@ -64,26 +40,7 @@ const ContactPage = () => {
     }
 
     try {
-      const mensajesGuardados = JSON.parse(
-        localStorage.getItem("huertoMensajesContacto") || "[]"
-      );
-
-      if (!Array.isArray(mensajesGuardados)) {
-        throw new Error("Los mensajes guardados no son válidos.");
-      }
-
-      const nuevoMensaje = {
-        id: Date.now().toString(),
-        nombre: formulario.nombre.trim(),
-        correo: formulario.correo.trim(),
-        mensaje: formulario.mensaje.trim(),
-        fecha: new Date().toISOString(),
-      };
-
-      localStorage.setItem(
-        "huertoMensajesContacto",
-        JSON.stringify([...mensajesGuardados, nuevoMensaje])
-      );
+      contactService.enviar(formulario);
 
       setFormulario({
         nombre: "",
@@ -93,11 +50,14 @@ const ContactPage = () => {
 
       setErrores({});
       setConfirmacion(
-        "Tu mensaje se ha guardado correctamente en este navegador."
+        "Tu mensaje se guardó en este navegador. Esta demostración no envía correos.",
       );
-    } catch {
+    } catch (error) {
       setErrores({
-        general: "No se pudo guardar el mensaje. Inténtalo nuevamente.",
+        general:
+          error instanceof Error
+            ? error.message
+            : "No se pudo guardar el mensaje. Inténtalo nuevamente.",
       });
     }
   };
