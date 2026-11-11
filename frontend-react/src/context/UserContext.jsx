@@ -29,25 +29,15 @@ export function UserProvider({ children }) {
   }, []);
 
   const crear = useCallback(async (datos) => {
-    try {
-      const usuario = await userService.crear(datos);
-      setEstado({ usuarios: userService.listar(), error: null });
-      return usuario;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const usuario = await userService.crear(datos);
+    setEstado({ usuarios: userService.listar(), error: null });
+    return usuario;
   }, []);
 
   const actualizar = useCallback(async (id, datos) => {
-    try {
-      const usuario = await userService.actualizar(id, datos);
-      setEstado({ usuarios: userService.listar(), error: null });
-      return usuario;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const usuario = await userService.actualizar(id, datos);
+    setEstado({ usuarios: userService.listar(), error: null });
+    return usuario;
   }, []);
 
   return (

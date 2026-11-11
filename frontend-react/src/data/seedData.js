@@ -140,7 +140,7 @@ export const productosIniciales = [
     categoriaId: "productos-lacteos",
     precio: null,
     unidadVenta: "",
-    stock: 0,
+    stock: 120,
     unidadStock: "litros",
     descripcion:
       "Disfruta del sabor y la cremosidad de siempre con nuestra leche entera! 100% pura, natural y una excelente fuente de calcio y energía, es la opción ideal para desayunos perfectos, recetas deliciosas y para cuidar el bienestar de toda tu familia.",

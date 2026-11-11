@@ -29,35 +29,20 @@ export function ProductProvider({ children }) {
   }, []);
 
   const crear = useCallback((producto) => {
-    try {
-      const creado = productService.crear(producto);
-      setEstado({ productos: productService.listar(), error: null });
-      return creado;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const creado = productService.crear(producto);
+    setEstado({ productos: productService.listar(), error: null });
+    return creado;
   }, []);
 
   const actualizar = useCallback((id, cambios) => {
-    try {
-      const actualizado = productService.actualizar(id, cambios);
-      setEstado({ productos: productService.listar(), error: null });
-      return actualizado;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const actualizado = productService.actualizar(id, cambios);
+    setEstado({ productos: productService.listar(), error: null });
+    return actualizado;
   }, []);
 
   const eliminar = useCallback((id) => {
-    try {
-      productService.eliminar(id);
-      setEstado({ productos: productService.listar(), error: null });
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    productService.eliminar(id);
+    setEstado({ productos: productService.listar(), error: null });
   }, []);
 
   return (

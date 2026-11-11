@@ -29,35 +29,20 @@ export function CategoryProvider({ children }) {
   }, []);
 
   const crear = useCallback((categoria) => {
-    try {
-      const creada = categoryService.crear(categoria);
-      setEstado({ categorias: categoryService.listar(), error: null });
-      return creada;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const creada = categoryService.crear(categoria);
+    setEstado({ categorias: categoryService.listar(), error: null });
+    return creada;
   }, []);
 
   const actualizar = useCallback((id, cambios) => {
-    try {
-      const actualizada = categoryService.actualizar(id, cambios);
-      setEstado({ categorias: categoryService.listar(), error: null });
-      return actualizada;
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    const actualizada = categoryService.actualizar(id, cambios);
+    setEstado({ categorias: categoryService.listar(), error: null });
+    return actualizada;
   }, []);
 
   const eliminar = useCallback((id) => {
-    try {
-      categoryService.eliminar(id);
-      setEstado({ categorias: categoryService.listar(), error: null });
-    } catch (error) {
-      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
-      throw error;
-    }
+    categoryService.eliminar(id);
+    setEstado({ categorias: categoryService.listar(), error: null });
   }, []);
 
   return (
