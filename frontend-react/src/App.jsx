@@ -4,6 +4,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { CategoryProvider } from "./context/CategoryContext.jsx";
 import { OrderProvider } from "./context/OrderContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import PlaceholderPage from "./pages/PlaceholderPage.jsx";
@@ -17,12 +18,13 @@ function Page({ title }) {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ProductProvider>
-        <CategoryProvider>
-          <CartProvider>
-            <OrderProvider>
-              <Routes>
+    <UserProvider>
+      <AuthProvider>
+        <ProductProvider>
+          <CategoryProvider>
+            <CartProvider>
+              <OrderProvider>
+                <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Page title="Inicio" />} />
                 <Route path="/productos" element={<ProductsPage />} />
@@ -135,11 +137,12 @@ export default function App() {
                 />
               </Route>
               <Route path="*" element={<Page title="Página no encontrada" />} />
-              </Routes>
-            </OrderProvider>
-          </CartProvider>
-        </CategoryProvider>
-      </ProductProvider>
-    </AuthProvider>
+                </Routes>
+              </OrderProvider>
+            </CartProvider>
+          </CategoryProvider>
+        </ProductProvider>
+      </AuthProvider>
+    </UserProvider>
   );
 }
