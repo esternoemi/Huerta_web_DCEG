@@ -5,10 +5,11 @@ import { useProducts } from "../../context/useProducts.js";
 const STOCK_CRITICO = 5;
 
 export default function AdminCriticalProductsPage() {
-  const { productos } = useProducts();
+  const { productos, error } = useProducts();
 
   const productosCriticos = productos.filter(
-    (producto) => Number(producto.stock) <= STOCK_CRITICO
+    (producto) =>
+      producto.activo && producto.stock <= STOCK_CRITICO
   );
 
   return (
@@ -19,9 +20,15 @@ export default function AdminCriticalProductsPage() {
         Productos con {STOCK_CRITICO} unidades o menos disponibles.
       </p>
 
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          No se pudo cargar el inventario: {error}
+        </div>
+      )}
+
       <div className="card shadow-sm">
         <div className="card-body">
-          {productosCriticos.length === 0 ? (
+          {error ? null : productosCriticos.length === 0 ? (
             <div className="alert alert-success mb-0">
               No existen productos con stock crítico.
             </div>

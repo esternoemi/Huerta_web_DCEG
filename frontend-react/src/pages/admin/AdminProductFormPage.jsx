@@ -7,8 +7,8 @@ import { useCategories } from "../../context/useCategories.js";
 export default function AdminProductFormPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { productos, crear, actualizar } = useProducts();
-  const { categorias } = useCategories();
+  const { productos, error: errorProductos, crear, actualizar } = useProducts();
+  const { categorias, error: errorCategorias } = useCategories();
 
   const editando = Boolean(id);
   const productoActual = productos.find(
@@ -16,6 +16,7 @@ export default function AdminProductFormPage() {
   );
 
   const [formulario, setFormulario] = useState(() => ({
+    id: productoActual?.id ?? "",
     nombre: productoActual?.nombre ?? "",
     categoriaId: productoActual?.categoriaId ?? "",
     precio: productoActual?.precio ?? "",
@@ -36,10 +37,22 @@ export default function AdminProductFormPage() {
   function actualizarCampo(evento) {
     const { name, value, type, checked } = evento.target;
 
-    setFormulario((actual) => ({
-      ...actual,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormulario((actual) => {
+      if (name === "proximo" && checked) {
+        return {
+          ...actual,
+          proximo: true,
+          precio: "",
+          stock: "0",
+          precioOferta: "",
+        };
+      }
+
+      return {
+        ...actual,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
 
     setError("");
   }
@@ -52,18 +65,47 @@ export default function AdminProductFormPage() {
       return;
     }
 
-    if (!formulario.categoriaId) {
-      setError("Selecciona una categoría.");
+    if (!formulario.id.trim()) {
+      setError("El ID del producto es obligatorio.");
       return;
     }
 
-    if (formulario.precio === "" || Number(formulario.precio) < 0) {
-      setError("Ingresa un precio válido.");
+    if (!categorias.some((categoria) => categoria.id === formulario.categoriaId)) {
+      setError("Selecciona una categoría válida.");
       return;
     }
 
-    if (formulario.stock === "" || Number(formulario.stock) < 0) {
-      setError("Ingresa un stock válido.");
+    if (formulario.proximo) {
+      if (formulario.precio !== "" || Number(formulario.stock) !== 0) {
+        setError("Un producto Próximamente debe tener precio vacío y stock cero.");
+        return;
+      }
+    } else if (
+      formulario.precio === "" ||
+      !Number.isFinite(Number(formulario.precio)) ||
+      Number(formulario.precio) < 0
+    ) {
+      setError("Ingresa un precio válido o marca Próximamente.");
+      return;
+    }
+
+    if (
+      formulario.stock === "" ||
+      !Number.isInteger(Number(formulario.stock)) ||
+      Number(formulario.stock) < 0
+    ) {
+      setError("Ingresa un stock entero válido.");
+      return;
+    }
+
+    if (
+      formulario.precioOferta !== "" &&
+      (!Number.isFinite(Number(formulario.precioOferta)) ||
+        Number(formulario.precioOferta) < 0 ||
+        formulario.proximo ||
+        Number(formulario.precioOferta) >= Number(formulario.precio))
+    ) {
+      setError("El precio de oferta debe ser menor que el precio normal.");
       return;
     }
 
@@ -72,11 +114,13 @@ export default function AdminProductFormPage() {
     try {
       const datos = {
         ...formulario,
+        id: formulario.id.trim(),
         categoriaId: formulario.categoriaId,
-        precio: Number(formulario.precio),
+        precio: formulario.proximo ? null : Number(formulario.precio),
         stock: Number(formulario.stock),
+        proximo: formulario.proximo,
         precioOferta:
-          formulario.precioOferta === ""
+          formulario.precioOferta === "" || formulario.proximo
             ? null
             : Number(formulario.precioOferta),
       };
@@ -101,8 +145,12 @@ export default function AdminProductFormPage() {
 
   if (editando && !productoActual) {
     return (
-      <div className="alert alert-warning">
-        <p>No se encontró el producto solicitado.</p>
+      <div className={`alert ${errorProductos ? "alert-danger" : "alert-warning"}`}>
+        <p>
+          {errorProductos
+            ? `No se pudieron cargar los productos: ${errorProductos}`
+            : "No se encontró el producto solicitado."}
+        </p>
         <Link to="/admin/productos">Volver a productos</Link>
       </div>
     );
@@ -122,8 +170,29 @@ export default function AdminProductFormPage() {
             </div>
           )}
 
+          {errorCategorias && (
+            <div className="alert alert-danger" role="alert">
+              No se pudieron cargar las categorías: {errorCategorias}
+            </div>
+          )}
+
           <form onSubmit={guardarProducto}>
             <div className="row g-3">
+              <div className="col-md-6">
+                <label className="form-label" htmlFor="id">
+                  ID del producto
+                </label>
+                <input
+                  id="id"
+                  name="id"
+                  className="form-control"
+                  value={formulario.id}
+                  onChange={actualizarCampo}
+                  readOnly={editando}
+                  required
+                />
+              </div>
+
               <div className="col-md-6">
                 <label className="form-label" htmlFor="nombre">
                   Nombre
@@ -171,7 +240,8 @@ export default function AdminProductFormPage() {
                   className="form-control"
                   value={formulario.precio}
                   onChange={actualizarCampo}
-                  required
+                  disabled={formulario.proximo}
+                  required={!formulario.proximo}
                 />
               </div>
 
@@ -187,6 +257,7 @@ export default function AdminProductFormPage() {
                   className="form-control"
                   value={formulario.stock}
                   onChange={actualizarCampo}
+                  disabled={formulario.proximo}
                   required
                 />
               </div>
@@ -203,6 +274,7 @@ export default function AdminProductFormPage() {
                   className="form-control"
                   value={formulario.precioOferta ?? ""}
                   onChange={actualizarCampo}
+                  disabled={formulario.proximo}
                 />
               </div>
 

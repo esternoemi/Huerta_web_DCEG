@@ -6,8 +6,20 @@ import { formatoCLP } from "../../services/formatService.js";
 
 export default function AdminProductDetailPage() {
   const { id } = useParams();
-  const { productos } = useProducts();
-  const { categorias } = useCategories();
+  const { productos, error: errorProductos } = useProducts();
+  const { categorias, error: errorCategorias } = useCategories();
+
+  if (errorProductos || errorCategorias) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        No se pudo cargar el detalle del producto:{" "}
+        {errorProductos || errorCategorias}
+        <div className="mt-2">
+          <Link to="/admin/productos">Volver a productos</Link>
+        </div>
+      </div>
+    );
+  }
 
   const producto = productos.find(
     (item) => String(item.id) === String(id)
@@ -50,7 +62,11 @@ export default function AdminProductDetailPage() {
               </tr>
               <tr>
                 <th>Precio</th>
-                <td>{formatoCLP(producto.precio)}</td>
+                <td>
+                  {producto.precio === null
+                    ? "Próximamente"
+                    : formatoCLP(producto.precio)}
+                </td>
               </tr>
               <tr>
                 <th>Stock</th>

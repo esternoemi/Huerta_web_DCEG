@@ -90,7 +90,11 @@ export default function AdminProductsPage() {
             </div>
             <div className="col-12 col-md-4 text-md-end">
               <p className="mb-0 mt-md-4">
-                Total: <strong>{productosFiltrados.length}</strong>
+                {error ? (
+                  "Total no disponible"
+                ) : (
+                  <>Total: <strong>{productosFiltrados.length}</strong></>
+                )}
               </p>
             </div>
           </div>
@@ -115,7 +119,11 @@ export default function AdminProductsPage() {
                         {producto.unidadVenta}
                       </div>
                     </td>
-                    <td>{formatoCLP(producto.precio)}</td>
+                    <td>
+                      {producto.precio === null
+                        ? "Próximamente"
+                        : formatoCLP(producto.precio)}
+                    </td>
                     <td>
                       {producto.stock} {producto.unidadStock}
                     </td>
@@ -159,7 +167,7 @@ export default function AdminProductsPage() {
             </table>
           </div>
 
-          {productosFiltrados.length === 0 && (
+          {!error && productosFiltrados.length === 0 && (
             <p className="text-center text-muted py-3 mb-0">
               No se encontraron productos.
             </p>

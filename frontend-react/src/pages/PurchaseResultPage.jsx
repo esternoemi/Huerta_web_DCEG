@@ -4,8 +4,32 @@ import { formatoCLP } from "../services/formatService.js";
 
 export default function PurchaseResultPage() {
   const { resultado, id } = useParams();
-  const { buscar } = useOrders();
-  const orden = buscar(id);
+  const { buscar, error } = useOrders();
+  let errorLectura = error;
+  let orden = null;
+
+  if (!errorLectura) {
+    try {
+      orden = buscar(id);
+    } catch (errorBusqueda) {
+      errorLectura =
+        errorBusqueda instanceof Error
+          ? errorBusqueda.message
+          : "No se pudo leer la orden.";
+    }
+  }
+
+  if (errorLectura) {
+    return (
+      <main className="container my-5 text-center">
+        <h1>No se pudo cargar la orden</h1>
+        <p role="alert">{errorLectura}</p>
+        <Link to="/productos" className="btn btn-success">
+          Volver a productos
+        </Link>
+      </main>
+    );
+  }
 
   if (!orden) {
     return (

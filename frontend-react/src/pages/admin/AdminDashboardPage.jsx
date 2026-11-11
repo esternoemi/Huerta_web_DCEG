@@ -7,10 +7,31 @@ import { useOrders } from "../../context/useOrders.js";
 import { formatoCLP } from "../../services/formatService.js";
 
 export default function AdminDashboardPage() {
-  const { productos } = useProducts();
-  const { categorias } = useCategories();
-  const { usuarios } = useUsers();
-  const { ordenes } = useOrders();
+  const { productos, error: errorProductos } = useProducts();
+  const { categorias, error: errorCategorias } = useCategories();
+  const { usuarios, error: errorUsuarios } = useUsers();
+  const { ordenes, error: errorOrdenes } = useOrders();
+
+  const erroresCarga = [
+    errorProductos && `Productos: ${errorProductos}`,
+    errorCategorias && `Categorías: ${errorCategorias}`,
+    errorUsuarios && `Usuarios: ${errorUsuarios}`,
+    errorOrdenes && `Órdenes: ${errorOrdenes}`,
+  ].filter(Boolean);
+
+  if (erroresCarga.length > 0) {
+    return (
+      <div className="container-fluid">
+        <h1 className="h3 mb-3">Dashboard administrativo</h1>
+        <div className="alert alert-danger" role="alert">
+          No se puede calcular el resumen porque falló la carga de datos:
+          <ul className="mb-0 mt-2">
+            {erroresCarga.map((mensaje) => <li key={mensaje}>{mensaje}</li>)}
+          </ul>
+        </div>
+      </div>
+    );
+  }
 
   const totalProductos = productos.length;
   const totalCategorias = categorias.length;
