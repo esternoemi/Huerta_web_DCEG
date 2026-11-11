@@ -6,9 +6,14 @@ import { useOrders } from "../context/useOrders.js";
 
 const CheckoutPage = () => {
     const navigate = useNavigate();
-    const { lineas, total } = useCart();
+
+    // Obtener productos, total y función para vaciar el carrito
+    const { lineas, total, vaciar } = useCart();
+
+    // Obtener función para crear órdenes
     const { crear } = useOrders();
 
+    // Estados del formulario
     const [error, setError] = useState("");
     const [procesando, setProcesando] = useState(false);
 
@@ -24,6 +29,7 @@ const CheckoutPage = () => {
         resultadoDemostracion: "exito",
     });
 
+    // Formatear valores en pesos chilenos
     const formatoCLP = (valor) =>
         valor.toLocaleString("es-CL", {
             style: "currency",
@@ -31,6 +37,7 @@ const CheckoutPage = () => {
             maximumFractionDigits: 0,
         });
 
+    // Actualizar los campos del formulario
     const actualizarCampo = (evento) => {
         const { name, value } = evento.target;
 
@@ -40,6 +47,7 @@ const CheckoutPage = () => {
         }));
     };
 
+    // Registrar la compra
     const confirmarCompra = (evento) => {
         evento.preventDefault();
         setError("");
@@ -62,8 +70,15 @@ const CheckoutPage = () => {
         };
 
         try {
+            // Crear y guardar la orden
             const orden = crear(datosCheckout);
 
+            // Vaciar el carrito solo si la compra fue exitosa
+            if (orden.resultadoDemostracion === "exito") {
+                vaciar();
+            }
+
+            // Mostrar la página de resultado
             navigate(
                 `/compra/${orden.resultadoDemostracion}/${encodeURIComponent(orden.id)}`
             );
@@ -74,11 +89,14 @@ const CheckoutPage = () => {
         }
     };
 
+    // Mostrar mensaje si el carrito está vacío
     if (lineas.length === 0) {
         return (
             <main className="container my-5 text-center">
                 <h1>Finalizar Compra</h1>
+
                 <p>Tu carrito está vacío.</p>
+
                 <Link to="/productos" className="btn btn-success">
                     Ver productos
                 </Link>
@@ -95,13 +113,19 @@ const CheckoutPage = () => {
             <div className="row g-4">
                 <div className="col-lg-7">
                     <form onSubmit={confirmarCompra}>
-                        <h2 className="h4 mb-3">Datos del cliente</h2>
+                        <h2 className="h4 mb-3">
+                            Datos del cliente
+                        </h2>
 
                         <div className="row g-3">
                             <div className="col-md-6">
-                                <label htmlFor="nombre" className="form-label">
+                                <label
+                                    htmlFor="nombre"
+                                    className="form-label"
+                                >
                                     Nombre
                                 </label>
+
                                 <input
                                     id="nombre"
                                     name="nombre"
@@ -113,9 +137,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-md-6">
-                                <label htmlFor="apellido" className="form-label">
+                                <label
+                                    htmlFor="apellido"
+                                    className="form-label"
+                                >
                                     Apellido
                                 </label>
+
                                 <input
                                     id="apellido"
                                     name="apellido"
@@ -127,9 +155,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-12">
-                                <label htmlFor="correo" className="form-label">
+                                <label
+                                    htmlFor="correo"
+                                    className="form-label"
+                                >
                                     Correo electrónico
                                 </label>
+
                                 <input
                                     id="correo"
                                     name="correo"
@@ -148,9 +180,13 @@ const CheckoutPage = () => {
 
                         <div className="row g-3">
                             <div className="col-md-8">
-                                <label htmlFor="calle" className="form-label">
+                                <label
+                                    htmlFor="calle"
+                                    className="form-label"
+                                >
                                     Calle y número
                                 </label>
+
                                 <input
                                     id="calle"
                                     name="calle"
@@ -162,9 +198,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-md-4">
-                                <label htmlFor="departamento" className="form-label">
+                                <label
+                                    htmlFor="departamento"
+                                    className="form-label"
+                                >
                                     Departamento
                                 </label>
+
                                 <input
                                     id="departamento"
                                     name="departamento"
@@ -175,9 +215,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-md-6">
-                                <label htmlFor="region" className="form-label">
+                                <label
+                                    htmlFor="region"
+                                    className="form-label"
+                                >
                                     Región
                                 </label>
+
                                 <input
                                     id="region"
                                     name="region"
@@ -189,9 +233,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-md-6">
-                                <label htmlFor="comuna" className="form-label">
+                                <label
+                                    htmlFor="comuna"
+                                    className="form-label"
+                                >
                                     Comuna
                                 </label>
+
                                 <input
                                     id="comuna"
                                     name="comuna"
@@ -203,9 +251,13 @@ const CheckoutPage = () => {
                             </div>
 
                             <div className="col-12">
-                                <label htmlFor="indicaciones" className="form-label">
+                                <label
+                                    htmlFor="indicaciones"
+                                    className="form-label"
+                                >
                                     Indicaciones adicionales
                                 </label>
+
                                 <textarea
                                     id="indicaciones"
                                     name="indicaciones"
@@ -223,6 +275,7 @@ const CheckoutPage = () => {
                                 >
                                     Resultado de demostración
                                 </label>
+
                                 <select
                                     id="resultadoDemostracion"
                                     name="resultadoDemostracion"
@@ -233,6 +286,7 @@ const CheckoutPage = () => {
                                     <option value="exito">
                                         Compra exitosa
                                     </option>
+
                                     <option value="error">
                                         Compra rechazada
                                     </option>
@@ -241,7 +295,10 @@ const CheckoutPage = () => {
                         </div>
 
                         {error && (
-                            <div className="alert alert-danger mt-3" role="alert">
+                            <div
+                                className="alert alert-danger mt-3"
+                                role="alert"
+                            >
                                 {error}
                             </div>
                         )}
@@ -271,8 +328,10 @@ const CheckoutPage = () => {
                                     className="d-flex justify-content-between mb-2"
                                 >
                                     <span>
-                                        {linea.producto.nombre} x {linea.cantidad}
+                                        {linea.producto.nombre} x{" "}
+                                        {linea.cantidad}
                                     </span>
+
                                     <span>
                                         {formatoCLP(linea.subtotal)}
                                     </span>
