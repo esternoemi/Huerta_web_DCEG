@@ -1,4 +1,5 @@
 import { calcularLineas } from "./cartService.js";
+import { validarCheckout } from "./checkoutService.js";
 import { productService } from "./productService.js";
 import { guardarLista, leerLista } from "./storage.js";
 
@@ -31,6 +32,18 @@ function validarDatosCheckout(datos) {
   const correo = validarTexto(datos.cliente.correo, "correo");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/u.test(correo)) {
     throw new Error("El correo del cliente no es válido.");
+  }
+
+  const erroresCheckout = validarCheckout({
+    nombre: datos.cliente.nombre,
+    apellido: datos.cliente.apellido,
+    correo,
+    calle: datos.entrega.calle,
+    region: datos.entrega.region,
+    comuna: datos.entrega.comuna,
+  });
+  if (Object.keys(erroresCheckout).length > 0) {
+    throw new Error(Object.values(erroresCheckout)[0]);
   }
 
   return {
