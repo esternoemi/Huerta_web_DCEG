@@ -1,61 +1,99 @@
 # Huerto Hogar
 
-Sitio web demostrativo de una tienda de productos frescos y orgánicos. Está construido con HTML, CSS y JavaScript, y se ejecuta como sitio estático, sin proceso de compilación.
+Huerto Hogar es una tienda de ejemplo para comprar frutas, verduras y otros productos frescos. La versión que se usa actualmente está hecha con React.
 
-## Inicio
+El proyecto permite recorrer la tienda, agregar productos al carrito y simular una compra. También tiene pantallas para los perfiles de administrador y vendedor. Las compras son de prueba: no se cobra dinero ni se envían pedidos reales.
 
-Desde la carpeta del proyecto, inicia un servidor estático:
-En ejemplo con python:
+## Cómo abrir el proyecto
+
+Necesitas tener instalado Node.js, que incluye npm. Luego:
+
+1. Abre una terminal en la carpeta del proyecto.
+2. Entra a la carpeta `frontend-react`:
+
+   ```bash
+   cd frontend-react
+   ```
+
+3. Instala lo necesario para ejecutar el proyecto:
+
+   ```bash
+   npm install
+   ```
+
+4. Inicia el sitio:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Abre en el navegador la dirección que aparece en la terminal. Normalmente es `http://localhost:5173/`.
+
+Para detener el sitio, vuelve a la terminal y presiona `Ctrl+C`.
+
+### Comandos útiles
+
+Estos comandos también se ejecutan dentro de `frontend-react`:
+
 ```bash
-python -m http.server 8000
+npm run lint
+npm run build
 ```
-Abre `http://localhost:8000/` en el navegador. Bootstrap y Flatpickr se cargan desde CDN, por lo que se requiere conexión a internet para disponer de todos los estilos y del calendario de fechas.
 
-## Recorridos del sitio
+- `npm run lint` revisa si hay problemas en el código.
+- `npm run build` prepara una versión del sitio para publicar.
 
-### Tienda y pedidos
+## Qué se puede hacer en el sitio
 
-1. Inicio presenta las categorías y una selección de productos.
-2. Productos muestra el catálogo generado desde `js/productos.js` y permite filtrar por categoría.
-3. Cada producto disponible tiene una vista de detalle. Los artículos marcados como “Próximamente” no se pueden agregar al carrito.
-4. El carrito permite agregar productos desde el catálogo o su detalle, cambiar cantidades dentro del stock disponible, quitar artículos y revisar subtotales y total.
-5. Al confirmar, se crea un pedido de demostración con estado “Recibida” y el carrito se vacía.
+### Tienda y compras
 
-### Cuentas y permisos
+1. En **Inicio** puedes conocer la tienda y encontrar accesos a sus secciones.
+2. En **Productos** puedes recorrer el catálogo y buscar por categoría.
+3. Puedes abrir el detalle de cada producto. Los que dicen **“Próximamente”** todavía no se pueden comprar.
+4. En el carrito puedes agregar o quitar productos, cambiar cantidades y revisar el total. La cantidad no puede superar el stock disponible.
+5. En el checkout ingresas los datos necesarios para la entrega y realizas una compra de prueba.
+6. Al terminar, el sitio muestra el resultado y guarda la orden en ese navegador. Si la compra se confirma, el carrito queda vacío.
 
-- El registro crea cuentas de cliente y solicita datos personales, dirección y ubicación. La fecha de nacimiento es opcional.
-- El inicio de sesión tiene tres roles: cliente, administrador y vendedor.
-- El cliente navega por la tienda pública.
-- El administrador accede a la gestión de usuarios y productos.
-- El vendedor accede a `paginas/vendedor.html`, donde puede consultar productos, sus detalles, órdenes y detalles de órdenes. No dispone de acciones de edición.
-- Un administrador puede crear, editar o eliminar usuarios y asignarles un perfil.
+### Cuentas
 
-### Contacto y contenido
+- Puedes crear una cuenta de cliente desde **Regístrate aquí**, en la página de inicio de sesión.
+- Hay tres tipos de cuenta: cliente, administrador y vendedor.
+- El cliente puede usar las funciones de la tienda.
+- El administrador puede revisar y administrar productos, categorías y usuarios, además de consultar órdenes y reportes.
+- El vendedor puede revisar productos y órdenes, pero no modificarlos.
 
-- Contacto valida nombre, correo y mensaje. El mensaje se guarda localmente y se informa que no se envía por correo.
-- Nosotros presenta información de la tienda y del equipo del proyecto.
-- Blogs contiene dos artículos con sus respectivas páginas de detalle.
+### Otras secciones
 
-## Validaciones
+- **Contacto** guarda el mensaje en el navegador; no lo envía por correo.
+- **Nosotros** presenta información de la tienda y del equipo.
+- **Blogs** muestra artículos y sus páginas.
+- También puedes visitar las páginas de categorías y ofertas.
 
-Los formularios validan datos en el navegador y muestran mensajes junto a los campos. Se aplican, entre otras, las reglas de correo admitido (`@duoc.cl`, `@profesor.duoc.cl` o `@gmail.com`), contraseña de 4 a 10 caracteres, RUN chileno sin puntos ni guion y comentario de hasta 500 caracteres.
+## Algunas reglas de los formularios
 
-Los selectores de ubicación dependen de la región elegida. La Región Metropolitana incluye sus 52 comunas; las demás regiones utilizan las comunas cargadas actualmente en el proyecto.
+- Para registrarse se necesita un RUN válido, nombre, apellido, correo, contraseña, teléfono, dirección, región y comuna.
+- Se aceptan correos terminados en `duoc.cl`, `profesor.duoc.cl` o `gmail.com`.
+- La contraseña debe tener entre 4 y 10 caracteres, e incluir una mayúscula, una minúscula, un número y un símbolo.
+- La fecha de nacimiento es opcional.
+- La comuna disponible depende de la región elegida.
+- El mensaje de contacto puede tener hasta 500 caracteres.
+- El carrito no permite agregar más unidades que las disponibles.
 
-## Almacenamiento y alcance
+## Datos de prueba
 
-Los datos se guardan en el navegador actual:
+Las cuentas, el carrito, las órdenes y los mensajes se guardan en el navegador donde abriste el sitio. No se comparten con otros equipos y se pueden borrar al limpiar los datos del sitio en el navegador.
 
-- `huertaUsuarios`: cuentas registradas y usuarios creados por administración.
-- `huertaSesion`: sesión activa, mediante `sessionStorage`.
-- `huertaCarrito`: contenido del carrito.
-- `huertaOrdenes`: pedidos de demostración.
-- `huertaMensajesContacto`: mensajes de contacto de demostración.
+En modo de desarrollo puedes preparar cuentas ficticias desde `http://localhost:5173/acceso-demo` o con el enlace que aparece en la página de inicio de sesión:
 
+1. Elige una contraseña que cumpla las reglas que muestra la página.
+2. Inicia sesión con uno de estos correos:
+   - Administrador: `admin@demo.local`
+   - Vendedor: `vendedor@demo.local`
+3. Usa la contraseña que acabas de elegir.
 
-## Cuenta de demostración
+Estas cuentas sirven para probar las pantallas. Los permisos y las compras son parte de la demostración, no un sistema listo para manejar información o pagos reales.
 
-El proyecto incluye un usuario administrador para probar el acceso:
+## Carpetas del proyecto
 
-- Correo: `prueba@gmail.com`
-- Contraseña: `Huerta#26`
+- `frontend-react`: la versión actual del sitio. Usa esta carpeta para ejecutar el proyecto.
+- `frontend-antiguo`: la versión anterior, guardada como referencia. No necesitas usarla para abrir el sitio actual.
