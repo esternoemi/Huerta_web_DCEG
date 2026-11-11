@@ -56,13 +56,6 @@ export const authService = {
     return usuario;
   },
 
-  registrarCliente(datos) {
-    if (!datos || typeof datos !== "object" || Array.isArray(datos)) {
-      throw new TypeError("Los datos del registro deben ser un objeto.");
-    }
-    return userService.crear({ ...datos, rol: "cliente" });
-  },
-
   cerrarSesion() {
     window.sessionStorage.removeItem(CLAVE_SESION);
   },

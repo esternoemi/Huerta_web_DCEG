@@ -4,10 +4,12 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { CategoryProvider } from "./context/CategoryContext.jsx";
 import { OrderProvider } from "./context/OrderContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
+import { UserProvider } from "./context/UserContext.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import PlaceholderPage from "./pages/PlaceholderPage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 import { RequireRole } from "./routes/RequireRole.jsx";
 
 function Page({ title }) {
@@ -16,12 +18,13 @@ function Page({ title }) {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ProductProvider>
-        <CategoryProvider>
-          <CartProvider>
-            <OrderProvider>
-              <Routes>
+    <UserProvider>
+      <AuthProvider>
+        <ProductProvider>
+          <CategoryProvider>
+            <CartProvider>
+              <OrderProvider>
+                <Routes>
               <Route element={<PublicLayout />}>
                 <Route path="/" element={<Page title="Inicio" />} />
                 <Route path="/productos" element={<ProductsPage />} />
@@ -35,7 +38,7 @@ export default function App() {
                   element={<Page title="Categoría" />}
                 />
                 <Route path="/ofertas" element={<Page title="Ofertas" />} />
-                <Route path="/carrito" element={<Page title="Carrito" />} />
+                <Route path="/carrito" element={<CartPage />} />
                 <Route path="/checkout" element={<Page title="Checkout" />} />
                 <Route
                   path="/compra/:resultado/:id"
@@ -134,11 +137,12 @@ export default function App() {
                 />
               </Route>
               <Route path="*" element={<Page title="Página no encontrada" />} />
-              </Routes>
-            </OrderProvider>
-          </CartProvider>
-        </CategoryProvider>
-      </ProductProvider>
-    </AuthProvider>
+                </Routes>
+              </OrderProvider>
+            </CartProvider>
+          </CategoryProvider>
+        </ProductProvider>
+      </AuthProvider>
+    </UserProvider>
   );
 }

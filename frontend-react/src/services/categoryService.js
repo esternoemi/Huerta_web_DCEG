@@ -1,4 +1,5 @@
 import { categoriasIniciales } from "../data/seedData.js";
+import { productService } from "./productService.js";
 import { guardarLista, leerLista } from "./storage.js";
 
 const CLAVE = "huertaCategorias";
@@ -33,15 +34,20 @@ export const categoryService = {
 
   crear(categoria) {
     validarCategoria(categoria);
+    const nuevaCategoria = {
+      ...categoria,
+      id: categoria.id.trim(),
+      nombre: categoria.nombre.trim(),
+    };
     const categorias = leerTodas();
 
-    if (categorias.some((item) => item.id === categoria.id)) {
-      throw new Error(`Ya existe la categoría ${categoria.id}.`);
+    if (categorias.some((item) => item.id === nuevaCategoria.id)) {
+      throw new Error(`Ya existe la categoría ${nuevaCategoria.id}.`);
     }
 
-    const nuevasCategorias = [...categorias, categoria];
+    const nuevasCategorias = [...categorias, nuevaCategoria];
     guardarLista(CLAVE, nuevasCategorias);
-    return categoria;
+    return nuevaCategoria;
   },
 
   actualizar(id, cambios) {
@@ -68,6 +74,11 @@ export const categoryService = {
     const categorias = leerTodas();
     if (!categorias.some((categoria) => categoria.id === id)) {
       throw new Error(`No existe la categoría ${id}.`);
+    }
+    if (productService.listar().some((producto) => producto.categoriaId === id)) {
+      throw new Error(
+        "No se puede eliminar la categoría porque tiene productos asociados.",
+      );
     }
 
     guardarLista(
