@@ -23,6 +23,8 @@ import AboutPage from "./pages/AboutPage.jsx";
 import BlogListPage from "./pages/BlogListPage.jsx";
 import BlogDetailPage from "./pages/BlogDetailPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegisterPage from "./pages/RegisterPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -74,11 +76,11 @@ export default function App() {
                     />
                     <Route
                       path="/login"
-                      element={<Page title="Iniciar sesión" />}
+                      element={<LoginPage />}
                     />
                     <Route
                       path="/registro"
-                      element={<Page title="Registro" />}
+                      element={<RegisterPage />}
                     />
                   </Route>
 
