@@ -8,6 +8,7 @@ import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import PlaceholderPage from "./pages/PlaceholderPage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
+import CartPage from "./pages/CartPage.jsx";
 import { RequireRole } from "./routes/RequireRole.jsx";
 
 function Page({ title }) {
@@ -35,7 +36,7 @@ export default function App() {
                   element={<Page title="Categoría" />}
                 />
                 <Route path="/ofertas" element={<Page title="Ofertas" />} />
-                <Route path="/carrito" element={<Page title="Carrito" />} />
+                <Route path="/carrito" element={<CartPage />} />
                 <Route path="/checkout" element={<Page title="Checkout" />} />
                 <Route
                   path="/compra/:resultado/:id"
