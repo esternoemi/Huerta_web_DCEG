@@ -26,6 +26,11 @@ import ContactPage from "./pages/ContactPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import { useAuth } from "./context/useAuth.js";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage.jsx";
+import AdminProductsPage from "./pages/admin/AdminProductsPage.jsx";
+import AdminProductFormPage from "./pages/admin/AdminProductFormPage.jsx";
+import AdminProductDetailPage from "./pages/admin/AdminProductDetailPage.jsx";
+import AdminCriticalProductsPage from "./pages/admin/AdminCriticalProductsPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -81,33 +86,21 @@ export default function App() {
                       element={<PurchaseResultPage />}
                     />
                     <Route path="/nosotros" element={<AboutPage />} />
-                    <Route
-                      path="/blogs"
-                      element={<BlogListPage />}
-                    />
+                    <Route path="/blogs" element={<BlogListPage />} />
                     <Route
                       path="/blogs/:slug"
                       element={<BlogDetailPage />}
                     />
-                    <Route
-                      path="/contacto"
-                      element={<ContactPage />}
-                    />
-                    <Route
-                      path="/login"
-                      element={<LoginPage />}
-                    />
-                    <Route
-                      path="/registro"
-                      element={<RegisterPage />}
-                    />
+                    <Route path="/contacto" element={<ContactPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/registro" element={<RegisterPage />} />
                   </Route>
 
                   <Route element={<RequireRole role="administrador" />}>
                     <Route path="/admin" element={<AdminLayout />}>
                       <Route
                         index
-                        element={<Page title="Dashboard" />}
+                        element={<AdminDashboardPage />}
                       />
                       <Route
                         path="ordenes"
@@ -119,15 +112,15 @@ export default function App() {
                       />
                       <Route
                         path="productos"
-                        element={<Page title="Productos" />}
+                        element={<AdminProductsPage />}
                       />
                       <Route
                         path="productos/nuevo"
-                        element={<Page title="Nuevo producto" />}
+                        element={<AdminProductFormPage />}
                       />
                       <Route
                         path="productos/criticos"
-                        element={<Page title="Productos críticos" />}
+                        element={<AdminCriticalProductsPage />}
                       />
                       <Route
                         path="productos/reportes"
@@ -135,11 +128,11 @@ export default function App() {
                       />
                       <Route
                         path="productos/:id/editar"
-                        element={<Page title="Editar producto" />}
+                        element={<AdminProductFormPage />}
                       />
                       <Route
                         path="productos/:id"
-                        element={<Page title="Detalle de producto" />}
+                        element={<AdminProductDetailPage />}
                       />
                       <Route
                         path="categorias"
