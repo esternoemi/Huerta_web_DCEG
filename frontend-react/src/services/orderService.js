@@ -3,7 +3,7 @@ import { validarCheckout } from "./checkoutService.js";
 import { productService } from "./productService.js";
 import { guardarLista, leerLista } from "./storage.js";
 
-const CLAVE_ORDENES = "huertaOrdenes";
+const CLAVE_ORDENES = "huertaOrdenesReact";
 const CLAVE_CARRITO = "huertaCarrito";
 const RESULTADOS = new Set(["exito", "error"]);
 
