@@ -23,6 +23,14 @@ function validarProductoComprable(producto) {
   }
 }
 
+function obtenerPrecioVigente(producto) {
+  return Number.isFinite(producto.precioOferta) &&
+    producto.precioOferta >= 0 &&
+    producto.precioOferta < producto.precio
+    ? producto.precioOferta
+    : producto.precio;
+}
+
 function buscarLinea(carrito, idProducto) {
   return carrito.find((linea) => linea.id === idProducto);
 }
@@ -90,10 +98,16 @@ export function calcularLineas(carrito, productos) {
       throw new Error(`Stock insuficiente para ${producto.nombre}.`);
     }
 
+    const precioVigente = obtenerPrecioVigente(producto);
+    const productoEnLinea =
+      precioVigente === producto.precio
+        ? producto
+        : { ...producto, precio: precioVigente };
+
     return {
-      producto,
+      producto: productoEnLinea,
       cantidad: linea.cantidad,
-      subtotal: producto.precio * linea.cantidad,
+      subtotal: precioVigente * linea.cantidad,
     };
   });
 }
