@@ -17,6 +17,7 @@ import HomePage from "./pages/HomePage.jsx";
 import ProductDetailPage from "./pages/ProductDetailPage.jsx";
 import CategoriesPage from "./pages/CategoriesPage.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
+import OffersPage from "./pages/OffersPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -43,7 +44,7 @@ export default function App() {
                   path="/categorias/:slug"
                   element={<CategoryPage />}
                 />
-                <Route path="/ofertas" element={<Page title="Ofertas" />} />
+                <Route path="/ofertas" element={<OffersPage />} />
                 <Route path="/carrito" element={<CartPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route
