@@ -46,6 +46,12 @@ export default function AdminProductsPage() {
 
         <div className="d-flex flex-wrap gap-2">
           <Link
+            to="/admin/productos/reportes"
+            className="btn btn-outline-success"
+          >
+            Reporte
+          </Link>
+          <Link
             to="/admin/productos/criticos"
             className="btn btn-outline-warning"
           >

@@ -16,7 +16,7 @@ function cargarSesion() {
 }
 
 export function AuthProvider({ children }) {
-  const { crear: crearUsuario } = useUsers();
+  const { crear: crearUsuario, actualizar: actualizarUsuario } = useUsers();
   const [estado, setEstado] = useState(cargarSesion);
 
   const iniciarSesion = useCallback(async (datos) => {
@@ -33,6 +33,28 @@ export function AuthProvider({ children }) {
       return crearUsuario({ ...datos, rol: "cliente" });
     },
     [crearUsuario],
+  );
+
+  const actualizarPerfil = useCallback(
+    async (datos) => {
+      if (!estado.usuario) {
+        throw new Error("Debes iniciar sesión para editar tu perfil.");
+      }
+
+      try {
+        const usuarioActualizado = await actualizarUsuario(estado.usuario.id, {
+          ...datos,
+          rol: estado.usuario.rol,
+        });
+        authService.guardarSesion(usuarioActualizado);
+        setEstado({ usuario: usuarioActualizado, error: null });
+        return usuarioActualizado;
+      } catch (error) {
+        setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
+        throw error;
+      }
+    },
+    [actualizarUsuario, estado.usuario],
   );
 
   const cerrarSesion = useCallback(() => {
@@ -53,6 +75,7 @@ export function AuthProvider({ children }) {
         error: estado.error,
         iniciarSesion,
         registrarCliente,
+        actualizarPerfil,
         cerrarSesion,
       }}
     >

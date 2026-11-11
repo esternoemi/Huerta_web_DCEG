@@ -17,6 +17,12 @@ function validarPerfil(usuario) {
 }
 
 export const authService = {
+  guardarSesion(usuario) {
+    validarPerfil(usuario);
+    window.sessionStorage.setItem(CLAVE_SESION, JSON.stringify(usuario));
+    return usuario;
+  },
+
   leerSesion() {
     const texto = window.sessionStorage.getItem(CLAVE_SESION);
     if (texto === null) {
@@ -51,9 +57,7 @@ export const authService = {
       throw new Error("El correo o la contraseña no son correctos.");
     }
 
-    validarPerfil(usuario);
-    window.sessionStorage.setItem(CLAVE_SESION, JSON.stringify(usuario));
-    return usuario;
+    return this.guardarSesion(usuario);
   },
 
   cerrarSesion() {

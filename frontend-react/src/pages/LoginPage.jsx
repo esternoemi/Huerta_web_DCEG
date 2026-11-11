@@ -190,6 +190,13 @@ export default function LoginPage() {
                   Volver al inicio
                 </Link>
               </div>
+              {import.meta.env.DEV && (
+                <div className="text-center mt-3">
+                  <Link to="/acceso-demo">
+                    Preparar cuentas de demostración
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

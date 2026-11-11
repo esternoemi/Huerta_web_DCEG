@@ -8,7 +8,6 @@ import { ProductProvider } from "./context/ProductContext.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import PublicLayout from "./layouts/PublicLayout.jsx";
-import PlaceholderPage from "./pages/PlaceholderPage.jsx";
 import ProductsPage from "./pages/ProductsPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import { RequireRole } from "./routes/RequireRole.jsx";
@@ -31,10 +30,24 @@ import AdminProductsPage from "./pages/admin/AdminProductsPage.jsx";
 import AdminProductFormPage from "./pages/admin/AdminProductFormPage.jsx";
 import AdminProductDetailPage from "./pages/admin/AdminProductDetailPage.jsx";
 import AdminCriticalProductsPage from "./pages/admin/AdminCriticalProductsPage.jsx";
-
-function Page({ title }) {
-  return <PlaceholderPage title={title} />;
-}
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage.jsx";
+import AdminOrderDetailPage from "./pages/admin/AdminOrderDetailPage.jsx";
+import AdminProductReportsPage from "./pages/admin/AdminProductReportsPage.jsx";
+import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage.jsx";
+import AdminCategoryFormPage from "./pages/admin/AdminCategoryFormPage.jsx";
+import AdminUsersPage from "./pages/admin/AdminUsersPage.jsx";
+import AdminUserDetailPage from "./pages/admin/AdminUserDetailPage.jsx";
+import AdminUserFormPage from "./pages/admin/AdminUserFormPage.jsx";
+import AdminUserOrdersPage from "./pages/admin/AdminUserOrdersPage.jsx";
+import AdminReportsPage from "./pages/admin/AdminReportsPage.jsx";
+import AdminProfilePage from "./pages/admin/AdminProfilePage.jsx";
+import VendorProductsPage from "./pages/vendor/VendorProductsPage.jsx";
+import VendorProductDetailPage from "./pages/vendor/VendorProductDetailPage.jsx";
+import VendorOrdersPage from "./pages/vendor/VendorOrdersPage.jsx";
+import VendorOrderDetailPage from "./pages/vendor/VendorOrderDetailPage.jsx";
+import DemoAccessPage from "./pages/DemoAccessPage.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
+import VendorLayout from "./layouts/VendorLayout.jsx";
 
 function AuthErrorNotice() {
   const { error } = useAuth();
@@ -94,6 +107,12 @@ export default function App() {
                     <Route path="/contacto" element={<ContactPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registro" element={<RegisterPage />} />
+                    {import.meta.env.DEV && (
+                      <Route
+                        path="/acceso-demo"
+                        element={<DemoAccessPage />}
+                      />
+                    )}
                   </Route>
 
                   <Route element={<RequireRole role="administrador" />}>
@@ -104,11 +123,11 @@ export default function App() {
                       />
                       <Route
                         path="ordenes"
-                        element={<Page title="Órdenes" />}
+                        element={<AdminOrdersPage />}
                       />
                       <Route
                         path="ordenes/:id"
-                        element={<Page title="Detalle de orden/boleta" />}
+                        element={<AdminOrderDetailPage />}
                       />
                       <Route
                         path="productos"
@@ -124,7 +143,7 @@ export default function App() {
                       />
                       <Route
                         path="productos/reportes"
-                        element={<Page title="Reportes de productos" />}
+                        element={<AdminProductReportsPage />}
                       />
                       <Route
                         path="productos/:id/editar"
@@ -136,69 +155,59 @@ export default function App() {
                       />
                       <Route
                         path="categorias"
-                        element={<Page title="Categorías" />}
+                        element={<AdminCategoriesPage />}
                       />
                       <Route
                         path="categorias/nueva"
-                        element={<Page title="Nueva categoría" />}
+                        element={<AdminCategoryFormPage />}
                       />
                       <Route
                         path="categorias/:id/editar"
-                        element={<Page title="Editar categoría" />}
+                        element={<AdminCategoryFormPage />}
                       />
                       <Route
                         path="usuarios"
-                        element={<Page title="Usuarios" />}
+                        element={<AdminUsersPage />}
                       />
                       <Route
                         path="usuarios/nuevo"
-                        element={<Page title="Nuevo usuario" />}
+                        element={<AdminUserFormPage />}
                       />
                       <Route
                         path="usuarios/:id/editar"
-                        element={<Page title="Editar usuario" />}
+                        element={<AdminUserFormPage />}
                       />
                       <Route
                         path="usuarios/:id/compras"
-                        element={<Page title="Historial de compras" />}
+                        element={<AdminUserOrdersPage />}
                       />
                       <Route
                         path="usuarios/:id"
-                        element={<Page title="Detalle de usuario" />}
+                        element={<AdminUserDetailPage />}
                       />
                       <Route
                         path="reportes"
-                        element={<Page title="Reportes" />}
+                        element={<AdminReportsPage />}
                       />
                       <Route
                         path="perfil"
-                        element={<Page title="Perfil" />}
+                        element={<AdminProfilePage />}
                       />
                     </Route>
                   </Route>
 
                   <Route element={<RequireRole role="vendedor" />}>
-                    <Route
-                      path="/vendedor/productos"
-                      element={<Page title="Productos para vendedor" />}
-                    />
-                    <Route
-                      path="/vendedor/productos/:id"
-                      element={<Page title="Detalle de producto para vendedor" />}
-                    />
-                    <Route
-                      path="/vendedor/ordenes"
-                      element={<Page title="Órdenes para vendedor" />}
-                    />
-                    <Route
-                      path="/vendedor/ordenes/:id"
-                      element={<Page title="Detalle de orden para vendedor" />}
-                    />
+                    <Route path="/vendedor" element={<VendorLayout />}>
+                      <Route path="productos" element={<VendorProductsPage />} />
+                      <Route path="productos/:id" element={<VendorProductDetailPage />} />
+                      <Route path="ordenes" element={<VendorOrdersPage />} />
+                      <Route path="ordenes/:id" element={<VendorOrderDetailPage />} />
+                    </Route>
                   </Route>
 
                   <Route
                     path="*"
-                    element={<Page title="Página no encontrada" />}
+                    element={<NotFoundPage />}
                   />
                 </Routes>
               </OrderProvider>

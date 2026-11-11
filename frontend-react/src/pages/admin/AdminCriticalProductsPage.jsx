@@ -9,7 +9,7 @@ export default function AdminCriticalProductsPage() {
 
   const productosCriticos = productos.filter(
     (producto) =>
-      producto.activo && producto.stock <= STOCK_CRITICO
+      producto.activo && !producto.proximo && producto.stock <= STOCK_CRITICO
   );
 
   return (

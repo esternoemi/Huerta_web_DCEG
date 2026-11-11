@@ -1,4 +1,5 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../context/useAuth.js";
 import { useCart } from "../context/useCart.js";
 
@@ -16,6 +17,10 @@ export default function PublicLayout() {
   const { usuario, cerrarSesion } = useAuth();
   const { cantidadTotal } = useCart();
   const navigate = useNavigate();
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
+  const claseEnlace = ({ isActive }) =>
+    `nav-link${isActive ? " active" : ""}`;
 
   function manejarCierreSesion() {
     if (cerrarSesion()) {
@@ -31,38 +36,64 @@ export default function PublicLayout() {
             <Link className="navbar-brand marca" to="/">
               Huerto Hogar
             </Link>
-            <div className="d-flex flex-wrap align-items-center gap-3">
-              <Link to="/productos">Productos</Link>
-              <Link to="/categorias">Categorías</Link>
-              <Link to="/ofertas">Ofertas</Link>
-              <Link to="/nosotros">Nosotros</Link>
-              <Link to="/blogs">Blogs</Link>
-              <Link to="/contacto">Contacto</Link>
-              <Link
-                to="/carrito"
-                aria-label={`Carrito de compras, ${cantidadTotal} productos`}
-              >
-                Carrito <span className="badge text-bg-success">{cantidadTotal}</span>
-              </Link>
-              {usuario ? (
-                <>
-                  <span className="text-nowrap">
-                    Hola, {usuario.nombre}
-                  </span>
-                  {obtenerRutaPanel(usuario.rol) && (
-                    <Link to={obtenerRutaPanel(usuario.rol)}>Mi panel</Link>
-                  )}
-                  <button
-                    type="button"
-                    className="btn btn-outline-success btn-sm"
-                    onClick={manejarCierreSesion}
-                  >
-                    Cerrar sesión
-                  </button>
-                </>
-              ) : (
-                <Link to="/login">Ingresar</Link>
-              )}
+            <button
+              className="navbar-toggler"
+              type="button"
+              aria-controls="menu-principal"
+              aria-expanded={menuAbierto}
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              onClick={() => setMenuAbierto((abierto) => !abierto)}
+            >
+              <span className="navbar-toggler-icon" />
+            </button>
+            <div
+              id="menu-principal"
+              className={`collapse navbar-collapse${menuAbierto ? " show" : ""}`}
+            >
+              <div className="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                <NavLink className={claseEnlace} to="/productos" onClick={() => setMenuAbierto(false)}>Productos</NavLink>
+                <NavLink className={claseEnlace} to="/categorias" onClick={() => setMenuAbierto(false)}>Categorías</NavLink>
+                <NavLink className={claseEnlace} to="/ofertas" onClick={() => setMenuAbierto(false)}>Ofertas</NavLink>
+                <NavLink className={claseEnlace} to="/nosotros" onClick={() => setMenuAbierto(false)}>Nosotros</NavLink>
+                <NavLink className={claseEnlace} to="/blogs" onClick={() => setMenuAbierto(false)}>Blogs</NavLink>
+                <NavLink className={claseEnlace} to="/contacto" onClick={() => setMenuAbierto(false)}>Contacto</NavLink>
+                <NavLink
+                  className={claseEnlace}
+                  to="/carrito"
+                  aria-label={`Carrito de compras, ${cantidadTotal} productos`}
+                  onClick={() => setMenuAbierto(false)}
+                >
+                  Carrito <span className="badge text-bg-success">{cantidadTotal}</span>
+                </NavLink>
+                {usuario ? (
+                  <>
+                    <span className="nav-link text-nowrap">
+                      Hola, {usuario.nombre}
+                    </span>
+                    {obtenerRutaPanel(usuario.rol) && (
+                      <NavLink
+                        className={claseEnlace}
+                        to={obtenerRutaPanel(usuario.rol)}
+                        onClick={() => setMenuAbierto(false)}
+                      >
+                        Mi panel
+                      </NavLink>
+                    )}
+                    <button
+                      type="button"
+                      className="btn btn-outline-success btn-sm ms-lg-2"
+                      onClick={() => {
+                        setMenuAbierto(false);
+                        manejarCierreSesion();
+                      }}
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <NavLink className={claseEnlace} to="/login" onClick={() => setMenuAbierto(false)}>Ingresar</NavLink>
+                )}
+              </div>
             </div>
           </div>
         </nav>

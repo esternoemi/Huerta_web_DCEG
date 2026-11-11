@@ -7,6 +7,7 @@ const ProductCard = ({ product }) => {
     const { agregar } = useCart();
     const [mensaje, setMensaje] = useState("");
     const [error, setError] = useState("");
+    const [imagenFallida, setImagenFallida] = useState(false);
 
     const comprable =
         product.activo &&
@@ -39,17 +40,25 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="card h-100 shadow-sm">
-            <img
-                src={product.imagen}
-                className="card-img-top"
-                alt={product.nombre}
-                style={{ height: "250px", objectFit: "contain" }}
-            />
+            {imagenFallida ? (
+                <div className="product-image-fallback" role="img" aria-label={`Imagen no disponible para ${product.nombre}`}>
+                    Imagen no disponible
+                </div>
+            ) : (
+                <img
+                    src={product.imagen}
+                    className="card-img-top"
+                    alt={product.nombre}
+                    onError={() => setImagenFallida(true)}
+                />
+            )}
 
             <div className="card-body d-flex flex-column">
                 <h5 className="card-title">{product.nombre}</h5>
 
-                <p className="card-text">{product.descripcion}</p>
+                <p className="card-text product-card-description">
+                    {product.descripcion}
+                </p>
 
                 {product.proximo || product.precio === null ? (
                     <p className="text-warning fw-bold">

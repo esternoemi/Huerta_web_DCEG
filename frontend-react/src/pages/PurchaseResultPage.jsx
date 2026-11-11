@@ -132,7 +132,7 @@ export default function PurchaseResultPage() {
             <p className="h4 text-end">Total: {formatoCLP(orden.total)}</p>
           </section>
 
-          <div className="d-flex flex-wrap justify-content-center gap-2 mt-4">
+          <div className="d-flex flex-wrap justify-content-center gap-2 mt-4 print-hidden">
             {compraExitosa ? (
               <button
                 type="button"
