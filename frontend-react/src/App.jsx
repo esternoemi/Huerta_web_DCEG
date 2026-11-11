@@ -14,6 +14,7 @@ import { RequireRole } from "./routes/RequireRole.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import PurchaseResultPage from "./pages/PurchaseResultPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import ProductDetailPage from "./pages/ProductDetailPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -33,7 +34,7 @@ export default function App() {
                 <Route path="/productos" element={<ProductsPage />} />
                 <Route
                   path="/productos/:id"
-                  element={<Page title="Detalle del producto" />}
+                  element={<ProductDetailPage />}
                 />
                 <Route path="/categorias" element={<Page title="Categorías" />} />
                 <Route
