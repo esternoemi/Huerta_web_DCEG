@@ -2,25 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
-
-const REGIONES_COMUNAS = {
-  "Arica y Parinacota": ["Arica", "Camarones", "Putre"],
-  Tarapacá: ["Iquique", "Alto Hospicio", "Pozo Almonte"],
-  Antofagasta: ["Antofagasta", "Calama", "Mejillones"],
-  Atacama: ["Copiapó", "Caldera", "Vallenar"],
-  Coquimbo: ["La Serena", "Coquimbo", "Ovalle"],
-  Valparaíso: ["Valparaíso", "Viña del Mar", "Quilpué", "San Antonio"],
-  Metropolitana: ["Santiago", "San Bernardo", "Puente Alto", "Maipú", "Providencia", "La Florida"],
-  "O'Higgins": ["Rancagua", "Rengo", "San Fernando"],
-  Maule: ["Talca", "Curicó", "Linares"],
-  Ñuble: ["Chillán", "San Carlos", "Bulnes"],
-  Biobío: ["Concepción", "Talcahuano", "Los Ángeles"],
-  "La Araucanía": ["Temuco", "Villarrica", "Pucón"],
-  "Los Ríos": ["Valdivia", "La Unión", "Panguipulli"],
-  "Los Lagos": ["Puerto Montt", "Osorno", "Puerto Varas"],
-  Aysén: ["Coyhaique", "Puerto Aysén"],
-  Magallanes: ["Punta Arenas", "Puerto Natales"],
-};
+import { regionesChile } from "../data/ubicaciones.js";
 
 const CAMPOS_INICIALES = {
   run: "",
@@ -37,9 +19,9 @@ const CAMPOS_INICIALES = {
 };
 
 function validarRun(run) {
-  const limpio = run.replace(/[^0-9kK]/g, "").toUpperCase();
+  const limpio = run.trim().toLocaleUpperCase("es");
 
-  if (!/^\d{7,8}[0-9K]$/.test(limpio)) {
+  if (!/^\d{6,8}[0-9K]$/u.test(limpio)) {
     return false;
   }
 
@@ -70,6 +52,14 @@ function validarContrasena(contrasena) {
     /\p{N}/u.test(contrasena) &&
     /[^\p{L}\p{N}\s]/u.test(contrasena)
   );
+}
+
+function obtenerFechaLocal() {
+  const fecha = new Date();
+  const anio = fecha.getFullYear();
+  const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+  const dia = String(fecha.getDate()).padStart(2, "0");
+  return `${anio}-${mes}-${dia}`;
 }
 
 export default function RegisterPage() {
@@ -106,16 +96,28 @@ export default function RegisterPage() {
       nuevosErrores.run = "Ingresa un RUN chileno válido.";
     }
 
-    if (!formulario.nombre.trim()) {
-      nuevosErrores.nombre = "Debes ingresar tu nombre.";
+    if (
+      !formulario.nombre.trim() ||
+      !/^[\p{L}\p{M} ]+$/u.test(formulario.nombre.trim())
+    ) {
+      nuevosErrores.nombre = "Ingresa un nombre válido usando solo letras y espacios.";
     }
 
-    if (!formulario.apellido.trim()) {
-      nuevosErrores.apellido = "Debes ingresar tu apellido.";
+    if (
+      !formulario.apellido.trim() ||
+      !/^[\p{L}\p{M} ]+$/u.test(formulario.apellido.trim())
+    ) {
+      nuevosErrores.apellido = "Ingresa un apellido válido usando solo letras y espacios.";
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formulario.correo.trim())) {
-      nuevosErrores.correo = "Ingresa un correo electrónico válido.";
+    const correo = formulario.correo.trim();
+    const dominio = correo.split("@")[1]?.toLocaleLowerCase("es");
+    if (
+      !/^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/u.test(correo) ||
+      !["duoc.cl", "profesor.duoc.cl", "gmail.com"].includes(dominio)
+    ) {
+      nuevosErrores.correo =
+        "Usa un correo válido de duoc.cl, profesor.duoc.cl o gmail.com.";
     }
 
     if (!validarContrasena(formulario.contrasena)) {
@@ -127,29 +129,30 @@ export default function RegisterPage() {
       nuevosErrores.confirmarContrasena = "Las contraseñas no coinciden.";
     }
 
-    if (!formulario.fechaNacimiento) {
-      nuevosErrores.fechaNacimiento = "Selecciona tu fecha de nacimiento.";
-    } else if (formulario.fechaNacimiento > new Date().toLocaleDateString("en-CA")) {
+    if (
+      formulario.fechaNacimiento &&
+      formulario.fechaNacimiento > obtenerFechaLocal()
+    ) {
       nuevosErrores.fechaNacimiento = "La fecha no puede ser futura.";
     }
 
-    if (!formulario.region) {
+    const regionSeleccionada = regionesChile.find(
+      (region) => region.nombre === formulario.region,
+    );
+    if (!regionSeleccionada) {
       nuevosErrores.region = "Selecciona una región.";
-    }
-
-    if (!formulario.comuna) {
+    } else if (!regionSeleccionada.comunas.includes(formulario.comuna)) {
       nuevosErrores.comuna = "Selecciona una comuna.";
     }
 
-    if (!formulario.direccion.trim()) {
-      nuevosErrores.direccion = "Ingresa tu dirección.";
+    if (!formulario.direccion.trim() || formulario.direccion.length > 300) {
+      nuevosErrores.direccion =
+        "Ingresa una dirección de hasta 300 caracteres.";
     }
 
-    if (
-      formulario.telefono.trim() &&
-      !/^\+?[0-9\s-]{8,15}$/.test(formulario.telefono.trim())
-    ) {
-      nuevosErrores.telefono = "Ingresa un teléfono válido.";
+    if (!/^\d{9,}$/u.test(formulario.telefono.trim())) {
+      nuevosErrores.telefono =
+        "Ingresa un teléfono de al menos 9 dígitos, solo números.";
     }
 
     return nuevosErrores;
@@ -169,11 +172,12 @@ export default function RegisterPage() {
     setCargando(true);
 
     try {
-      const { confirmarContrasena, ...datos } = formulario;
+      const datos = { ...formulario };
+      delete datos.confirmarContrasena;
 
       await registrarCliente({
         ...datos,
-        run: datos.run.trim().toUpperCase(),
+        run: datos.run.trim().toLocaleUpperCase("es"),
         nombre: datos.nombre.trim(),
         apellido: datos.apellido.trim(),
         correo: datos.correo.trim().toLowerCase(),
@@ -208,6 +212,19 @@ export default function RegisterPage() {
         onChange={actualizarCampo}
         disabled={cargando}
         required={obligatorio}
+        maxLength={
+          nombre === "run"
+            ? 9
+            : nombre === "nombre"
+              ? 50
+              : nombre === "apellido" || nombre === "correo"
+                ? 100
+                : nombre === "contrasena" || nombre === "confirmarContrasena"
+                  ? 10
+                  : nombre === "direccion"
+                    ? 300
+                    : undefined
+        }
         aria-invalid={Boolean(errores[nombre])}
         aria-describedby={errores[nombre] ? `${nombre}-error` : undefined}
         autoComplete={
@@ -294,16 +311,19 @@ export default function RegisterPage() {
                       onChange={actualizarCampo}
                       disabled={cargando}
                       aria-invalid={Boolean(errores.region)}
+                      aria-describedby={errores.region ? "region-error" : undefined}
                     >
                       <option value="">Selecciona una región</option>
-                      {Object.keys(REGIONES_COMUNAS).map((region) => (
-                        <option key={region} value={region}>
-                          {region}
+                      {regionesChile.map((region) => (
+                        <option key={region.nombre} value={region.nombre}>
+                          {region.nombre}
                         </option>
                       ))}
                     </select>
                     {errores.region && (
-                      <div className="invalid-feedback">{errores.region}</div>
+                      <div id="region-error" className="invalid-feedback">
+                        {errores.region}
+                      </div>
                     )}
                   </div>
 
@@ -319,22 +339,27 @@ export default function RegisterPage() {
                       onChange={actualizarCampo}
                       disabled={!formulario.region || cargando}
                       aria-invalid={Boolean(errores.comuna)}
+                      aria-describedby={errores.comuna ? "comuna-error" : undefined}
                     >
                       <option value="">Selecciona una comuna</option>
-                      {(REGIONES_COMUNAS[formulario.region] || []).map((comuna) => (
-                        <option key={comuna} value={comuna}>
-                          {comuna}
-                        </option>
+                      {(
+                        regionesChile.find(
+                          (region) => region.nombre === formulario.region,
+                        )?.comunas ?? []
+                      ).map((comuna) => (
+                        <option key={comuna} value={comuna}>{comuna}</option>
                       ))}
                     </select>
                     {errores.comuna && (
-                      <div className="invalid-feedback">{errores.comuna}</div>
+                      <div id="comuna-error" className="invalid-feedback">
+                        {errores.comuna}
+                      </div>
                     )}
                   </div>
                 </div>
 
                 {campo("direccion", "Dirección")}
-                {campo("telefono", "Teléfono (opcional)", "tel", false)}
+                {campo("telefono", "Número de contacto", "tel")}
 
                 <button
                   type="submit"
