@@ -3,13 +3,25 @@ import { AuthContext } from "./authContext.js";
 import { useUsers } from "./useUsers.js";
 import { authService } from "../services/authService.js";
 
+function obtenerMensaje(error) {
+  return error instanceof Error ? error.message : "Error desconocido.";
+}
+
+function cargarSesion() {
+  try {
+    return { usuario: authService.leerSesion(), error: null };
+  } catch (error) {
+    return { usuario: null, error: obtenerMensaje(error) };
+  }
+}
+
 export function AuthProvider({ children }) {
   const { crear: crearUsuario } = useUsers();
-  const [usuario, setUsuario] = useState(() => authService.leerSesion());
+  const [estado, setEstado] = useState(cargarSesion);
 
   const iniciarSesion = useCallback(async (datos) => {
     const usuarioAutenticado = await authService.iniciarSesion(datos);
-    setUsuario(usuarioAutenticado);
+    setEstado({ usuario: usuarioAutenticado, error: null });
     return usuarioAutenticado;
   }, []);
 
@@ -24,13 +36,25 @@ export function AuthProvider({ children }) {
   );
 
   const cerrarSesion = useCallback(() => {
-    authService.cerrarSesion();
-    setUsuario(null);
+    try {
+      authService.cerrarSesion();
+      setEstado({ usuario: null, error: null });
+      return true;
+    } catch (error) {
+      setEstado((actual) => ({ ...actual, error: obtenerMensaje(error) }));
+      return false;
+    }
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ usuario, iniciarSesion, registrarCliente, cerrarSesion }}
+      value={{
+        usuario: estado.usuario,
+        error: estado.error,
+        iniciarSesion,
+        registrarCliente,
+        cerrarSesion,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -25,9 +25,27 @@ import BlogDetailPage from "./pages/BlogDetailPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import { useAuth } from "./context/useAuth.js";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
+}
+
+function AuthErrorNotice() {
+  const { error } = useAuth();
+
+  if (!error) {
+    return null;
+  }
+
+  return (
+    <div className="container mt-3">
+      <div className="alert alert-danger" role="alert">
+        No se pudo leer o actualizar la sesión local: {error} Puedes intentar
+        iniciar sesión nuevamente.
+      </div>
+    </div>
+  );
 }
 
 export default function App() {
@@ -38,6 +56,7 @@ export default function App() {
           <CategoryProvider>
             <CartProvider>
               <OrderProvider>
+                <AuthErrorNotice />
                 <Routes>
                   <Route element={<PublicLayout />}>
                     <Route path="/" element={<HomePage />} />

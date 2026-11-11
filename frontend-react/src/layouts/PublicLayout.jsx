@@ -18,8 +18,9 @@ export default function PublicLayout() {
   const navigate = useNavigate();
 
   function manejarCierreSesion() {
-    cerrarSesion();
-    navigate("/", { replace: true });
+    if (cerrarSesion()) {
+      navigate("/", { replace: true });
+    }
   }
 
   return (
