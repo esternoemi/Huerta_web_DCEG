@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth.js";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { iniciarSesion } = useAuth();
 
   const [formulario, setFormulario] = useState({
@@ -93,6 +94,12 @@ export default function LoginPage() {
               <p className="text-center text-muted mb-4">
                 Ingresa a tu cuenta de Huerto Hogar.
               </p>
+
+              {location.state?.mensaje && (
+                <div className="alert alert-success" role="status">
+                  {location.state.mensaje}
+                </div>
+              )}
 
               {errorGeneral && (
                 <div className="alert alert-danger" role="alert">
