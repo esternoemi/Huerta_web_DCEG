@@ -13,6 +13,7 @@ import CartPage from "./pages/CartPage.jsx";
 import { RequireRole } from "./routes/RequireRole.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import PurchaseResultPage from "./pages/PurchaseResultPage.jsx";
+import HomePage from "./pages/HomePage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -28,7 +29,7 @@ export default function App() {
               <OrderProvider>
                 <Routes>
               <Route element={<PublicLayout />}>
-                <Route path="/" element={<Page title="Inicio" />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/productos" element={<ProductsPage />} />
                 <Route
                   path="/productos/:id"
