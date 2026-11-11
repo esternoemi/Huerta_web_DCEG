@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/CheckoutPage.jsx";
 import PurchaseResultPage from "./pages/PurchaseResultPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ProductDetailPage from "./pages/ProductDetailPage.jsx";
+import CategoriesPage from "./pages/CategoriesPage.jsx";
 
 function Page({ title }) {
   return <PlaceholderPage title={title} />;
@@ -36,7 +37,7 @@ export default function App() {
                   path="/productos/:id"
                   element={<ProductDetailPage />}
                 />
-                <Route path="/categorias" element={<Page title="Categorías" />} />
+                <Route path="/categorias" element={<CategoriesPage />} />
                 <Route
                   path="/categorias/:slug"
                   element={<Page title="Categoría" />}
