@@ -36,10 +36,12 @@ Para detener el sitio, vuelve a la terminal y presiona `Ctrl+C`.
 Estos comandos también se ejecutan dentro de `frontend-react`:
 
 ```bash
+npm test
 npm run lint
 npm run build
 ```
 
+- `npm test` ejecuta las pruebas unitarias de los componentes con Vitest y React Testing Library.
 - `npm run lint` revisa si hay problemas en el código.
 - `npm run build` prepara una versión del sitio para publicar.
 
